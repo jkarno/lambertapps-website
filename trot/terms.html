@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Use | Trot</title>
+    <meta name="description" content="Terms of use for Trot, the walking companion for iPhone. Covers subscriptions, the free trial, health disclaimers, and acceptable use.">
+    <link rel="canonical" href="https://lambertapps.com/trot/terms.html">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="favicon-512.png">
+    <meta name="apple-mobile-web-app-title" content="Trot">
+    <meta name="theme-color" content="#34C759">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Trot · Terms of Use">
+    <meta property="og:description" content="The basics of using Trot · subscriptions, health disclaimers, acceptable use.">
+    <meta property="og:image" content="app-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Theme (light / dark). Runs in the head BEFORE first paint so there's
+        // no flash of light mode for returning dark-mode users.
+        (() => {
+            const apply = (theme) => {
+                if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+                else document.documentElement.removeAttribute('data-theme');
+            };
+            try { apply(localStorage.getItem('trot-theme')); } catch (e) {}
+
+            // Delegated click handler · works even though the button may not
+            // exist yet when this script runs (head fires before body parses).
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('[data-theme-toggle]')) return;
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                // Freeze transitions during the swap so the scene/chrome
+                // don't animate · eliminates the day→night glitch.
+                document.documentElement.classList.add('theme-toggling');
+                apply(next);
+                try { localStorage.setItem('trot-theme', next); } catch (e) {}
+                // Re-enable transitions on the next frame.
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        document.documentElement.classList.remove('theme-toggling');
+                    });
+                });
+            });
+        })();
+    </script>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+        <nav class="site-nav container" aria-label="Primary">
+            <a href="index.html" class="brand-link" aria-label="Trot home">
+                <img src="app-icon.png" alt="Trot app icon" width="42" height="42">
+                <span class="brand-copy">
+                    <span class="brand-name">Trot</span>
+                    <span class="brand-tagline">Your walking companion</span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="support.html">Support</a>
+                <button type="button" class="theme-toggle" aria-label="Toggle dark mode" data-theme-toggle>
+                    <i class="ph ph-moon toggle-icon toggle-icon-moon" aria-hidden="true"></i>
+                    <i class="ph ph-sun toggle-icon toggle-icon-sun" aria-hidden="true"></i>
+                </button>
+                                <a href="https://apps.apple.com/app/id6761860133" class="button-link">Download</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main" class="docs-main">
+        <section class="doc-hero narrow">
+            <div class="doc-overline">Terms</div>
+            <h1 class="doc-title">The basics for using Trot.</h1>
+            <p class="doc-copy">What Trot provides, how the subscription works, and the ground rules for using the app.</p>
+            <div class="doc-meta">Last updated: April 23, 2026</div>
+        </section>
+
+        <div class="narrow doc-layout">
+            <article class="doc-surface">
+                <section>
+                    <h2>1. Acceptance of terms</h2>
+                    <p>By downloading, installing, or using Trot ("the app"), you agree to be bound by these Terms of Use. If you don't agree, don't use the app.</p>
+                </section>
+
+                <section>
+                    <h2>2. What Trot is</h2>
+                    <p>Trot is a step-tracking app for iPhone with a virtual pet companion, built by Lambert Apps. It reads Health and motion data from your device to count steps, display stats, and react to your activity. Trot is for personal, informational, and entertainment use. <strong>It is not a medical device.</strong></p>
+                </section>
+
+                <section>
+                    <h2>3. Health data disclaimer</h2>
+                    <p>Step counts, distance, flights climbed, active minutes, and other metrics shown in Trot are estimates derived from Apple Health and your device's motion sensors. Accuracy varies based on how you carry your phone, sensor calibration, and other factors. Trot should not be used for medical decisions. If something feels off with your health, talk to a healthcare professional.</p>
+                </section>
+
+                <section>
+                    <h2>4. Trot Pro subscription</h2>
+                    <p>Trot offers an optional subscription called Trot Pro that unlocks:</p>
+                    <ul>
+                        <li>An ad-free experience</li>
+                        <li>Home screen widgets</li>
+                        <li>Full walking history and year/month Trends views</li>
+                        <li>All future Pro features as they ship</li>
+                    </ul>
+                    <p>Subscription terms:</p>
+                    <ul>
+                        <li>Trot Pro is offered on an annual or monthly basis. Current pricing is shown in the app and on the App Store.</li>
+                        <li>The annual plan includes a 7-day free trial for first-time subscribers. If you do not cancel before the trial ends, you will be charged for the first year.</li>
+                        <li>Any unused portion of a free trial is forfeited when the trial converts to a paid subscription.</li>
+                        <li>Payment is charged to your Apple ID at confirmation of purchase.</li>
+                        <li>Subscriptions renew automatically at the same price unless canceled at least 24 hours before the end of the current billing period. Your Apple ID will be charged within 24 hours before renewal.</li>
+                        <li>You can manage or cancel your subscription at any time from <strong>iOS Settings → your name → Subscriptions</strong>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>5. Acceptable use</h2>
+                    <p>You agree to use Trot for its intended purpose. You may not reverse-engineer, decompile, or attempt to extract the source code of the app, and you may not use the app in ways that violate applicable laws.</p>
+                </section>
+
+                <section>
+                    <h2>6. Intellectual property</h2>
+                    <p>Trot, its artwork, code, illustrations, name, and mascot are owned by Lambert Apps and protected by copyright and other intellectual property laws. You may not copy or redistribute the app's content without permission.</p>
+                </section>
+
+                <section>
+                    <h2>7. Limitation of liability</h2>
+                    <p>Trot is provided "as is" and "as available," without warranties of any kind, express or implied. To the fullest extent permitted by law, Lambert Apps is not liable for damages arising from the use of the app, including inaccurate step counts, missed goals, or loss of locally stored data.</p>
+                </section>
+
+                <section>
+                    <h2>8. Changes to these terms</h2>
+                    <p>We may update these terms as the app evolves. Material changes will bump the "Last updated" date above. Continued use of the app after changes take effect means you accept the revised terms.</p>
+                </section>
+
+                <section>
+                    <h2>9. Contact</h2>
+                    <p>Questions about these terms? Email <a class="inline-link" href="mailto:support@lambertapps.com">support@lambertapps.com</a>.</p>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-copy">
+                <img src="app-icon.png" alt="Trot app icon" width="32" height="32" loading="lazy" decoding="async">
+                <span>&copy; 2026 Lambert Apps. All rights reserved.</span>
+            </div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="support.html">Support</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

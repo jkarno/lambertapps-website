@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support | Trot</title>
+    <meta name="description" content="Get help with Trot · step tracking, Apple Health, your companion, Trot Pro, widgets, and privacy.">
+    <link rel="canonical" href="https://lambertapps.com/trot/support.html">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="favicon-512.png">
+    <meta name="apple-mobile-web-app-title" content="Trot">
+    <meta name="theme-color" content="#34C759">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Trot · Support">
+    <meta property="og:description" content="Answers to common questions about step tracking, your pet, Trot Pro, and privacy.">
+    <meta property="og:image" content="app-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Theme (light / dark). Runs in the head BEFORE first paint so there's
+        // no flash of light mode for returning dark-mode users.
+        (() => {
+            const apply = (theme) => {
+                if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+                else document.documentElement.removeAttribute('data-theme');
+            };
+            try { apply(localStorage.getItem('trot-theme')); } catch (e) {}
+
+            // Delegated click handler · works even though the button may not
+            // exist yet when this script runs (head fires before body parses).
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('[data-theme-toggle]')) return;
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                // Freeze transitions during the swap so the scene/chrome
+                // don't animate · eliminates the day→night glitch.
+                document.documentElement.classList.add('theme-toggling');
+                apply(next);
+                try { localStorage.setItem('trot-theme', next); } catch (e) {}
+                // Re-enable transitions on the next frame.
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        document.documentElement.classList.remove('theme-toggling');
+                    });
+                });
+            });
+        })();
+    </script>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+        <nav class="site-nav container" aria-label="Primary">
+            <a href="index.html" class="brand-link" aria-label="Trot home">
+                <img src="app-icon.png" alt="Trot app icon" width="42" height="42">
+                <span class="brand-copy">
+                    <span class="brand-name">Trot</span>
+                    <span class="brand-tagline">Your walking companion</span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <button type="button" class="theme-toggle" aria-label="Toggle dark mode" data-theme-toggle>
+                    <i class="ph ph-moon toggle-icon toggle-icon-moon" aria-hidden="true"></i>
+                    <i class="ph ph-sun toggle-icon toggle-icon-sun" aria-hidden="true"></i>
+                </button>
+                                <a href="https://apps.apple.com/app/id6761860133" class="button-link">Download</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main" class="docs-main">
+        <section class="doc-hero narrow">
+            <div class="doc-overline">Support</div>
+            <h1 class="doc-title">Need help with Trot?</h1>
+            <p class="doc-copy">Answers to the questions we hear most. Step tracking, Apple Health permissions, your companion, Trot Pro, and privacy.</p>
+        </section>
+
+        <div class="narrow doc-layout">
+            <section class="doc-surface">
+                <h2>Contact us</h2>
+                <p>Found a bug? Have a feature idea? Seeing something that doesn't look right? Send us a note and we'll take a look.</p>
+
+                <div class="contact-band">
+                    <a class="contact-link" href="mailto:support@lambertapps.com">support@lambertapps.com</a>
+                    <p>Include your iPhone model and iOS version when the issue involves step counts, Health permissions, or subscriptions. It helps us diagnose faster.</p>
+                </div>
+            </section>
+
+            <section class="doc-surface">
+                <h2>Common questions</h2>
+
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <details open>
+                            <summary>How does my pet's mood work?</summary>
+                            <p>Your pet reflects your walking activity. They perk up as you make progress, get antsy when you've been quiet for a while, get ecstatic when you crush your goal, and sleep overnight. A gentle nudge, not a guilt trip.</p>
+                        </details>
+                    </div>
+
+                    <div class="faq-item">
+                        <details>
+                            <summary>How does step tracking work?</summary>
+                            <p>Trot counts steps from your iPhone's motion sensors in real time while the app is open, and syncs with Apple Health for your broader history of distance, flights climbed, and active minutes.</p>
+                        </details>
+                    </div>
+
+                    <div class="faq-item">
+                        <details>
+                            <summary>Is my health data private?</summary>
+                            <p>Yes. Your Apple Health data, step counts, and walking history all stay on your device. Trot never uploads or shares them. We do send anonymous usage events (screens you open, ad loads, conversion milestones) to improve the app; these never include your name, your pet's name, your location, or any health data. Full detail in the <a class="inline-link" href="privacy.html">Privacy Policy</a>.</p>
+                        </details>
+                    </div>
+
+                    <div class="faq-item">
+                        <details>
+                            <summary>What's included in Trot Pro?</summary>
+                            <p>No ads, home and lock-screen widgets, Month and Year views in Trends, and all future Pro features. The annual plan starts with a free trial for first-time subscribers.</p>
+                        </details>
+                    </div>
+
+                    <div class="faq-item">
+                        <details>
+                            <summary>How do I cancel my subscription?</summary>
+                            <p>Open iOS Settings, tap your name at the top, tap <strong>Subscriptions</strong>, find Trot, and tap <strong>Cancel Subscription</strong>. You keep access through the end of the current billing period.</p>
+                        </details>
+                    </div>
+
+                    <div class="faq-item">
+                        <details>
+                            <summary>Can I use Trot in dark mode?</summary>
+                            <p>Yes. In <strong>Settings</strong>, tap <strong>Appearance</strong> and pick <strong>Time of day</strong> (matches the dashboard scene, light during the day and dark in the evening), <strong>Light</strong>, or <strong>Dark</strong>. The setting applies across the app.</p>
+                        </details>
+                    </div>
+
+                    <div class="faq-item">
+                        <details>
+                            <summary>What notifications does Trot send?</summary>
+                            <p>Walk reminders, goal-hit and personal-best celebrations, streak-at-risk nudges, and a Sunday weekly recap. All are optional and toggle individually in <strong>Settings</strong>, then <strong>Notifications</strong>. Change the system permission anytime in iOS Settings, then Notifications, then Trot.</p>
+                        </details>
+                    </div>
+
+                    <div class="faq-item">
+                        <details>
+                            <summary>What widgets does Trot offer and how do they stay current?</summary>
+                            <p>Home screen: <strong>Step Count</strong> (small or medium, steps + mood), <strong>Mascot Mood</strong> (small, mood only), and <strong>Week at a Glance</strong> (medium, paw row for the last seven days). Lock screen: <strong>Daily Progress</strong> (today's ring) and <strong>Streak</strong> (counter with a paw row). Widgets read Apple Health directly on every iOS refresh, so they stay current even when Trot is closed, and step counts never go down during a day. Open Trot once to force a fresh sync. All widgets require Trot Pro.</p>
+                        </details>
+                    </div>
+
+                    <div class="faq-item">
+                        <details>
+                            <summary>My step count or history looks wrong. What can I check?</summary>
+                            <p>First, confirm Trot has access to both <strong>Motion &amp; Fitness</strong> and <strong>Apple Health</strong> in iOS Settings, under <strong>Privacy &amp; Security</strong>. Step counts are sensor-based estimates, so carrying your phone in a pocket or armband gives the most accurate reading. If Trot and Apple Health disagree, Health is authoritative for past days. If days still look off, open <strong>Settings</strong>, tap <strong>Health &amp; Motion</strong>, then <strong>Re-import data</strong> to wipe the local cache and re-fetch everything fresh.</p>
+                        </details>
+                    </div>
+
+                    <div class="faq-item">
+                        <details>
+                            <summary>How do I delete my Trot data?</summary>
+                            <p>Uninstall Trot from your iPhone. This clears your pet, goal, history cache, and local preferences. Apple Health is unaffected because Trot only reads from Health. If you have an active Trot Pro subscription, cancel it first in iOS Settings, then Subscriptions, so you're not still billed.</p>
+                        </details>
+                    </div>
+
+                    <div class="faq-item">
+                        <details>
+                            <summary>Does Trot work on iPad, Apple Watch, or Android?</summary>
+                            <p>Trot is iPhone-only right now. iPad, Apple Watch, and Android aren't on the near-term roadmap. Send suggestions to support and we'll consider them.</p>
+                        </details>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-copy">
+                <img src="app-icon.png" alt="Trot app icon" width="32" height="32" loading="lazy" decoding="async">
+                <span>&copy; 2026 Lambert Apps. All rights reserved.</span>
+            </div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="support.html">Support</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

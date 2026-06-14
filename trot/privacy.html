@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Trot</title>
+    <meta name="description" content="How Trot handles Health data, motion sensors, analytics, ads, and subscriptions. Written plainly.">
+    <link rel="canonical" href="https://lambertapps.com/trot/privacy.html">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="favicon-512.png">
+    <meta name="apple-mobile-web-app-title" content="Trot">
+    <meta name="theme-color" content="#34C759">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Trot · Privacy Policy">
+    <meta property="og:description" content="How Trot handles your Health data, motion sensors, analytics, and subscriptions.">
+    <meta property="og:image" content="app-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Theme (light / dark). Runs in the head BEFORE first paint so there's
+        // no flash of light mode for returning dark-mode users.
+        (() => {
+            const apply = (theme) => {
+                if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+                else document.documentElement.removeAttribute('data-theme');
+            };
+            try { apply(localStorage.getItem('trot-theme')); } catch (e) {}
+
+            // Delegated click handler · works even though the button may not
+            // exist yet when this script runs (head fires before body parses).
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('[data-theme-toggle]')) return;
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                // Freeze transitions during the swap so the scene/chrome
+                // don't animate · eliminates the day→night glitch.
+                document.documentElement.classList.add('theme-toggling');
+                apply(next);
+                try { localStorage.setItem('trot-theme', next); } catch (e) {}
+                // Re-enable transitions on the next frame.
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        document.documentElement.classList.remove('theme-toggling');
+                    });
+                });
+            });
+        })();
+    </script>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+        <nav class="site-nav container" aria-label="Primary">
+            <a href="index.html" class="brand-link" aria-label="Trot home">
+                <img src="app-icon.png" alt="Trot app icon" width="42" height="42">
+                <span class="brand-copy">
+                    <span class="brand-name">Trot</span>
+                    <span class="brand-tagline">Your walking companion</span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="support.html">Support</a>
+                <button type="button" class="theme-toggle" aria-label="Toggle dark mode" data-theme-toggle>
+                    <i class="ph ph-moon toggle-icon toggle-icon-moon" aria-hidden="true"></i>
+                    <i class="ph ph-sun toggle-icon toggle-icon-sun" aria-hidden="true"></i>
+                </button>
+                                <a href="https://apps.apple.com/app/id6761860133" class="button-link">Download</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main" class="docs-main">
+        <section class="doc-hero narrow">
+            <div class="doc-overline">Privacy</div>
+            <h1 class="doc-title">Your health data stays on your device.</h1>
+            <p class="doc-copy">Trot reads the data it needs to count your steps and power your companion. Nothing related to your walks or health leaves your iPhone.</p>
+            <div class="doc-meta">Last updated: April 23, 2026</div>
+        </section>
+
+        <div class="narrow doc-layout">
+            <article class="doc-surface">
+                <section>
+                    <h2>Overview</h2>
+                    <p>Trot ("we", "our", or "the app") is a step-tracking app with a virtual pet companion, built by Lambert Apps. This policy explains what data the app reads, where that data goes, and the choices you have.</p>
+                </section>
+
+                <section>
+                    <h2>Data we read on-device</h2>
+
+                    <h3>Health and motion data</h3>
+                    <p>With your permission, Trot reads the following from Apple Health and the device's motion sensors:</p>
+                    <ul>
+                        <li>Step count</li>
+                        <li>Walking + running distance</li>
+                        <li>Flights climbed</li>
+                        <li>Active energy burned</li>
+                        <li>Live motion data for real-time step counting while the app is open</li>
+                    </ul>
+                    <p>All of this is processed on your iPhone. We do not upload, transmit, or share your health data with any server, third party, or cloud service. We do not operate a backend that stores any of it.</p>
+
+                    <h3>On-device app data</h3>
+                    <p>Your goal, pet name, unit preferences, streak counters, and locally cached step history are stored in your iPhone's local storage. They never leave the device.</p>
+                </section>
+
+                <section>
+                    <h2>Data that leaves the device</h2>
+
+                    <h3>Anonymous analytics (Mixpanel)</h3>
+                    <p>Trot uses Mixpanel to collect anonymous usage analytics so we can understand which features get used and where the app breaks. Events we track include:</p>
+                    <ul>
+                        <li>Screens viewed and buttons tapped (e.g., "paywall shown", "goal changed")</li>
+                        <li>Session length and frequency</li>
+                        <li>Device type and iOS version</li>
+                        <li>App version</li>
+                    </ul>
+                    <p>Analytics events do not include your step count, distance, any Health data, your name, email, or any other personally identifying information. They are tied to a random anonymous identifier generated on-device.</p>
+
+                    <h3>Advertising (Google AdMob, free tier only)</h3>
+                    <p>The free version of Trot displays ads through Google AdMob. Because Trot skips App Tracking Transparency (ATT), AdMob only serves <strong>non-personalized ads</strong>. The ads you see are not based on your browsing history, interests, or device identifier. Trot Pro subscribers do not see ads.</p>
+
+                    <h3>Subscriptions (Apple + RevenueCat)</h3>
+                    <p>Subscription purchases are processed by Apple's App Store and orchestrated through RevenueCat. We receive anonymized subscription state (active / cancelled / trial) and a transaction ID. We do not receive your name, payment details, or Apple ID.</p>
+                </section>
+
+                <section>
+                    <h2>Third-party services at a glance</h2>
+                    <ul>
+                        <li><strong>Apple HealthKit</strong> for on-device Health data access only.</li>
+                        <li><strong>Apple StoreKit</strong> for subscription billing.</li>
+                        <li><strong>Mixpanel</strong> for anonymous product analytics.</li>
+                        <li><strong>Google AdMob</strong> for non-personalized ads in the free tier.</li>
+                        <li><strong>RevenueCat</strong> for subscription state management.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Children's privacy</h2>
+                    <p>Trot is not directed at children under 13. The app does not require an account, does not request personal information, and stores all personal data locally.</p>
+                </section>
+
+                <section>
+                    <h2>Your rights</h2>
+                    <p>You can:</p>
+                    <ul>
+                        <li>Revoke Health and Motion permissions at any time from <strong>iOS Settings → Privacy &amp; Security</strong>.</li>
+                        <li>Clear your Trot data from <strong>Trot → Settings → Reset App Data</strong>.</li>
+                        <li>Cancel a subscription from <strong>iOS Settings → your name → Subscriptions</strong>.</li>
+                        <li>Uninstall the app to remove all locally stored data.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Changes to this policy</h2>
+                    <p>We may update this policy as the app evolves. Material changes will bump the "Last updated" date above and be noted in the app's release notes.</p>
+                </section>
+
+                <section>
+                    <h2>Contact</h2>
+                    <p>Questions about this policy? Email <a class="inline-link" href="mailto:support@lambertapps.com">support@lambertapps.com</a>.</p>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-copy">
+                <img src="app-icon.png" alt="Trot app icon" width="32" height="32" loading="lazy" decoding="async">
+                <span>&copy; 2026 Lambert Apps. All rights reserved.</span>
+            </div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="support.html">Support</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Netlify config for the Lambert Apps website (lambertapps.com).
+# Static site, no build step. The repo root IS the publish root: files under
+# `trot/` serve at lambertapps.com/trot/, `index.html` redirects the apex to
+# /trot/, and `robots.txt` serves at /robots.txt.
+[build]
+  publish = "."
+  command = ""
+
+# Belt-and-suspenders apex redirect (the static index.html meta-refresh already
+# covers hosts without redirect support, e.g. GitHub Pages).
+[[redirects]]
+  from = "/"
+  to = "/trot/"
+  status = 301
+  force = false

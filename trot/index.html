@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trot | Walk More With a Step Counter Pet</title>
+    <meta name="description" content="Trot is a step counter pet for iPhone. Track steps in real time, hit daily goals, and watch your pet react as you walk.">
+    <link rel="canonical" href="https://lambertapps.com/trot/">
+
+    <!-- Favicon + iOS add-to-home title -->
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="favicon-512.png">
+    <meta name="apple-mobile-web-app-title" content="Trot">
+    <meta name="theme-color" content="#34C759">
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Trot · Your walking companion">
+    <meta property="og:description" content="A step counter with a reactive pet. Track your daily walks, build streaks, and watch your trends grow.">
+    <meta property="og:image" content="app-icon.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Trot · Your walking companion">
+    <meta name="twitter:description" content="A step counter with a reactive pet. Track your daily walks, build streaks, and watch your trends grow.">
+
+    <!-- Fonts · Nunito as non-Apple fallback for SF Pro Rounded.
+         On Apple devices `ui-rounded` in the CSS resolves to SF Pro Rounded
+         natively, so Nunito only downloads on non-Apple clients. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap">
+
+    <!-- Phosphor icons · same library used in the app (Ph.pawPrint.fill, etc.) -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- JSON-LD · surfaces app info on Google rich results + search cards -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MobileApplication",
+        "name": "Trot",
+        "description": "Trot is a step counter pet for iPhone. Track steps in real time, hit daily goals, and watch your pet react as you walk.",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "iOS",
+        "url": "https://lambertapps.com/trot/",
+        "downloadUrl": "https://apps.apple.com/app/id6761860133",
+        "installUrl": "https://apps.apple.com/app/id6761860133",
+        "author": {
+            "@type": "Organization",
+            "name": "Lambert Apps",
+            "url": "https://lambertapps.com/"
+        },
+        "offers": [
+            {
+                "@type": "Offer",
+                "name": "Free",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            {
+                "@type": "Offer",
+                "name": "Trot Pro Annual",
+                "price": "19.99",
+                "priceCurrency": "USD",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "price": "19.99",
+                    "priceCurrency": "USD",
+                    "referenceQuantity": {
+                        "@type": "QuantitativeValue",
+                        "value": 1,
+                        "unitCode": "ANN"
+                    }
+                }
+            },
+            {
+                "@type": "Offer",
+                "name": "Trot Pro Monthly",
+                "price": "2.99",
+                "priceCurrency": "USD",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "price": "2.99",
+                    "priceCurrency": "USD",
+                    "referenceQuantity": {
+                        "@type": "QuantitativeValue",
+                        "value": 1,
+                        "unitCode": "MON"
+                    }
+                }
+            }
+        ]
+    }
+    </script>
+    <script>
+        // Theme (light / dark). Runs in the head BEFORE first paint so there's
+        // no flash of light mode for returning dark-mode users.
+        (() => {
+            const apply = (theme) => {
+                if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+                else document.documentElement.removeAttribute('data-theme');
+            };
+            try { apply(localStorage.getItem('trot-theme')); } catch (e) {}
+
+            // Delegated click handler · works even though the button may not
+            // exist yet when this script runs (head fires before body parses).
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('[data-theme-toggle]')) return;
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                // Freeze transitions during the swap so the scene/chrome
+                // don't animate · eliminates the day→night glitch.
+                document.documentElement.classList.add('theme-toggling');
+                apply(next);
+                try { localStorage.setItem('trot-theme', next); } catch (e) {}
+                // Re-enable transitions on the next frame.
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        document.documentElement.classList.remove('theme-toggling');
+                    });
+                });
+            });
+        })();
+    </script>
+</head>
+<body class="landing-page">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+        <nav class="site-nav container" aria-label="Primary">
+            <a href="index.html" class="brand-link" aria-label="Trot home">
+                <img src="app-icon.png" alt="Trot app icon" width="42" height="42">
+                <span class="brand-copy">
+                    <span class="brand-name">Trot</span>
+                    <span class="brand-tagline">Your walking companion</span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="support.html">Support</a>
+                <button type="button" class="theme-toggle" aria-label="Toggle dark mode" data-theme-toggle>
+                    <i class="ph ph-moon toggle-icon toggle-icon-moon" aria-hidden="true"></i>
+                    <i class="ph ph-sun toggle-icon toggle-icon-sun" aria-hidden="true"></i>
+                </button>
+                <a href="#download" class="button-link">Download</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main">
+        <section class="hero">
+            <div class="hero-glow" aria-hidden="true"></div>
+
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <div class="hero-kicker">Step counter for iPhone</div>
+                    <h1 class="hero-title">A walking companion that reacts to <span class="accent-text">every step.</span></h1>
+                    <p>Real-time step tracking, daily goals, and a pet that makes hitting them more fun.</p>
+
+                    <div class="hero-actions" id="download">
+                        <a href="https://apps.apple.com/app/id6761860133" class="primary-button">Download for iPhone</a>
+                        <a href="#features" class="secondary-link">See how it works</a>
+                    </div>
+                </div>
+
+                <div class="hero-stage" aria-hidden="true">
+                    <!-- Floating feature badges · give the phone a sense of
+                         depth and call out what makes Trot worth downloading. -->
+                    <div class="feature-chip chip-streak">
+                        <i class="ph-fill ph-flame" aria-hidden="true"></i>
+                        <div>
+                            <small>Streak</small>
+                            <strong>7 days</strong>
+                        </div>
+                    </div>
+
+                    <div class="feature-chip chip-mood">
+                        <i class="ph-fill ph-smiley" aria-hidden="true"></i>
+                        <div>
+                            <small>Mood</small>
+                            <strong>Very happy</strong>
+                        </div>
+                    </div>
+
+                    <div class="feature-chip chip-trends">
+                        <i class="ph-fill ph-chart-line-up" aria-hidden="true"></i>
+                        <div>
+                            <small>This week</small>
+                            <strong>+14% vs last</strong>
+                        </div>
+                    </div>
+
+                    <div class="device-frame">
+                        <div class="device-screen">
+                            <div class="scene-layers" data-scene="day">
+                                <img class="scene-sky" src="assets/day-sky.webp" alt="">
+                                <img class="scene-foreground" src="assets/day-foreground.webp" alt="">
+                            </div>
+
+                            <div class="device-notch"></div>
+
+                            <img class="device-mascot" src="assets/mascot.webp" alt="">
+
+                            <div class="device-panel">
+                                <div class="device-eyebrow">Today</div>
+                                <div class="device-score">
+                                    <strong data-count-to="7448">0</strong>
+                                    <span>of 8,000 steps</span>
+                                </div>
+                                <div class="device-progress" aria-hidden="true">
+                                    <span style="--p: 93%;"></span>
+                                </div>
+                            </div>
+
+                            <div class="device-dock">
+                                <div class="dock-tabs" aria-hidden="true">
+                                    <span class="dock-tab is-selected">
+                                        <i class="ph-fill ph-dog"></i>
+                                        <small>Today</small>
+                                    </span>
+                                    <span class="dock-tab">
+                                        <i class="ph ph-notepad"></i>
+                                        <small>Insights</small>
+                                    </span>
+                                    <span class="dock-tab">
+                                        <i class="ph ph-chart-bar"></i>
+                                        <small>Trends</small>
+                                    </span>
+                                    <span class="dock-tab">
+                                        <i class="ph ph-gear"></i>
+                                        <small>Settings</small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="feature-band" id="features">
+            <div class="container feature-grid">
+                <div class="feature-intro">
+                    <div class="section-label">Why Trot works</div>
+                    <h2>A step counter that makes you want to keep walking.</h2>
+                    <p>A reactive pet, daily stats, history, and trends. Clear enough that your daily goal actually feels worth chasing.</p>
+                </div>
+
+                <div class="feature-list">
+                    <article class="feature-item">
+                        <div class="feature-mockup feature-mockup-pet">
+                            <img src="assets/mood-happy.webp" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="feature-content">
+                            <h3>A motivational pet</h3>
+                            <p>Your pet's mood reflects how you're walking. Hit your goal and they perk up; slow days show too, so progress is easy to feel.</p>
+                        </div>
+                    </article>
+
+                    <article class="feature-item">
+                        <div class="feature-mockup feature-mockup-insights">
+                            <div class="mini-ring">
+                                <div class="mini-ring-inner">
+                                    <strong data-mockup-count="7448" data-format="number">0</strong>
+                                    <span>steps</span>
+                                </div>
+                            </div>
+                            <div class="mini-stat">
+                                <i class="ph-fill ph-timer" aria-hidden="true"></i>
+                                <strong data-mockup-count="72" data-format="duration">0m</strong>
+                                <span>Active</span>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Daily insights</h3>
+                            <p>Steps, distance, active time, and flights for the day, all at a glance.</p>
+                        </div>
+                    </article>
+
+                    <article class="feature-item">
+                        <div class="feature-mockup feature-mockup-history">
+                            <div class="mini-calendar-label">March 2026</div>
+                            <div class="mini-calendar">
+                                <span style="--fill: 0.3;"></span>
+                                <span style="--fill: 0.5;"></span>
+                                <span style="--fill: 0.7;"></span>
+                                <span style="--fill: 0.9;"></span>
+                                <span style="--fill: 0.6;"></span>
+                                <span style="--fill: 0.4;"></span>
+                                <span style="--fill: 0.8;"></span>
+                                <span style="--fill: 0.5;"></span>
+                                <span style="--fill: 0.9;"></span>
+                                <span style="--fill: 0.7;"></span>
+                                <span style="--fill: 0.95;"></span>
+                                <span style="--fill: 0.85;"></span>
+                                <span style="--fill: 1;"></span>
+                                <span style="--fill: 0.7;"></span>
+                                <span style="--fill: 0.6;"></span>
+                                <span style="--fill: 0.9;"></span>
+                                <span style="--fill: 0.8;"></span>
+                                <span style="--fill: 1;"></span>
+                                <span style="--fill: 0.7;"></span>
+                                <span style="--fill: 0.95;"></span>
+                                <span style="--fill: 0.85;"></span>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Historical data</h3>
+                            <p>Every day, week, and month of your walking history, saved and ready to scroll back through.</p>
+                        </div>
+                    </article>
+
+                    <article class="feature-item">
+                        <div class="feature-mockup feature-mockup-trends">
+                            <div class="mini-trend-label">
+                                <span>This year</span>
+                                <strong class="mini-trend-delta">
+                                    <i class="ph-fill ph-trend-up" aria-hidden="true"></i>
+                                    +18%
+                                </strong>
+                            </div>
+                            <div class="mini-bars">
+                                <span style="--h: 28%;"></span>
+                                <span style="--h: 42%;"></span>
+                                <span style="--h: 36%;"></span>
+                                <span style="--h: 56%;"></span>
+                                <span style="--h: 48%;"></span>
+                                <span style="--h: 70%;"></span>
+                                <span style="--h: 62%;"></span>
+                                <span style="--h: 82%;"></span>
+                                <span style="--h: 74%;"></span>
+                                <span style="--h: 90%;"></span>
+                                <span style="--h: 84%;"></span>
+                                <span style="--h: 96%;"></span>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Long-term trends</h3>
+                            <p>Week, month, and year views show whether your walks are adding up into a real habit.</p>
+                        </div>
+                    </article>
+
+                    <article class="feature-item">
+                        <div class="feature-mockup feature-mockup-widgets">
+                            <div class="widget-card">
+                                <div class="widget-card-top">
+                                    <i class="ph-fill ph-paw-print" aria-hidden="true"></i>
+                                    <span>Today</span>
+                                </div>
+                                <strong data-mockup-count="7448" data-format="number">0</strong>
+                                <small>of 8,000 steps</small>
+                                <div class="widget-bar" aria-hidden="true"><span style="--p: 93%;"></span></div>
+                            </div>
+                            <div class="widget-lock">
+                                <div class="widget-lock-ring"><i class="ph-fill ph-paw-print" aria-hidden="true"></i></div>
+                                <div class="widget-lock-text">
+                                    <strong>7,448</strong>
+                                    <span>steps today</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Steps at a glance</h3>
+                            <p>Home and Lock Screen widgets keep today's count in view, so you never have to open the app to check in.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-band">
+            <div class="container">
+                <div class="cta-shell">
+                    <div class="cta-mascot">
+                        <img src="assets/mascot-no-paws.webp" alt="Trot mascot" loading="lazy" decoding="async">
+                    </div>
+                    <div class="cta-copy">
+                        <div class="section-label">Ready to start</div>
+                        <h2>Free to download. Easy to stick with.</h2>
+                        <p>Pick a daily goal, walk with your pet, and track your progress over time.</p>
+                    </div>
+                    <a href="https://apps.apple.com/app/id6761860133" class="primary-button">Get Trot</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-copy">
+                <img src="app-icon.png" alt="Trot app icon" width="32" height="32" loading="lazy" decoding="async">
+                <span>&copy; 2026 Lambert Apps. All rights reserved.</span>
+            </div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="support.html">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =====================================================
+        // Trot landing · motion + micro-interactions
+        // =====================================================
+        (() => {
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // --- 1. Scroll-reveal for feature items ---
+            const items = document.querySelectorAll('.feature-item');
+            if (items.length) {
+                if (reduceMotion || !('IntersectionObserver' in window)) {
+                    items.forEach(item => item.classList.add('is-visible'));
+                } else {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('is-visible');
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
+                    items.forEach(item => observer.observe(item));
+                }
+            }
+
+            // --- 2. Step count count-up on page load ---
+            const countEl = document.querySelector('[data-count-to]');
+            if (countEl) {
+                const target = parseInt(countEl.dataset.countTo, 10);
+                if (reduceMotion) {
+                    countEl.textContent = target.toLocaleString();
+                } else {
+                    const duration = 1400; // ms
+                    const startDelay = 450; // sync with card slide-in
+                    const start = performance.now() + startDelay;
+                    const tick = (now) => {
+                        const elapsed = Math.max(0, now - start);
+                        const t = Math.min(1, elapsed / duration);
+                        // Ease-out cubic
+                        const eased = 1 - Math.pow(1 - t, 3);
+                        countEl.textContent = Math.round(target * eased).toLocaleString();
+                        if (t < 1) requestAnimationFrame(tick);
+                    };
+                    requestAnimationFrame(tick);
+                }
+            }
+
+            // --- 3. Live data ticks · chart bar + step count every ~6s ---
+            // Pauses automatically when the hero scrolls out of view so we
+            // don't burn CPU/battery updating elements no one is looking at.
+            if (!reduceMotion && countEl) {
+                const bars = document.querySelectorAll('.chart-bars span:not(.is-rest)');
+                const hero = document.querySelector('.hero');
+                let liveStep = parseInt(countEl.dataset.countTo, 10);
+                let intervalId = null;
+                let tickingAllowed = false;   // flipped after initial delay
+                let heroVisible = true;       // default true; observer overrides
+
+                // Only the rightmost non-rest bar represents "current hour"
+                // · it's the one that grows as the user accumulates steps.
+                // Earlier bars are historical and shouldn't change.
+                const currentHourBar = bars[bars.length - 1];
+
+                const tick = () => {
+                    liveStep += Math.floor(Math.random() * 4) + 1;
+                    countEl.textContent = liveStep.toLocaleString();
+                    if (currentHourBar) {
+                        const current = parseFloat(currentHourBar.style.getPropertyValue('--h')) || 50;
+                        // Bias upward · current-hour activity grows as steps tick up
+                        const delta = Math.random() * 3 + 0.5;
+                        const next = Math.min(92, current + delta);
+                        currentHourBar.style.setProperty('--h', `${next.toFixed(1)}%`);
+                        currentHourBar.style.transition = 'height 500ms var(--ease-out)';
+                    }
+                };
+
+                const startInterval = () => {
+                    if (!intervalId && tickingAllowed && heroVisible) {
+                        intervalId = setInterval(tick, 5500 + Math.random() * 1500);
+                    }
+                };
+                const stopInterval = () => {
+                    if (intervalId) { clearInterval(intervalId); intervalId = null; }
+                };
+
+                // Hold off ticking until the entry animations settle.
+                setTimeout(() => { tickingAllowed = true; startInterval(); }, 3000);
+
+                // Pause when the hero leaves the viewport.
+                if (hero && 'IntersectionObserver' in window) {
+                    new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            heroVisible = entry.isIntersecting;
+                            if (heroVisible) startInterval();
+                            else stopInterval();
+                        });
+                    }, { threshold: 0 }).observe(hero);
+                }
+            }
+
+            // --- 4. Mouse parallax on the phone ---
+            // Tilts the whole device frame slightly, AND shifts each scene
+            // layer at a different rate so the illusion of depth reads:
+            // sky drifts the least, foreground more, mascot most.
+            const heroStage = document.querySelector('.hero-stage');
+            const deviceFrame = document.querySelector('.device-frame');
+            const sky = document.querySelector('.scene-sky');
+            const fg = document.querySelector('.scene-foreground');
+            const mascot = document.querySelector('.device-mascot');
+            if (!reduceMotion && heroStage && deviceFrame && matchMedia('(hover: hover)').matches) {
+                const MAX_TILT = 1.25;  // degrees · 25% of previous, subtle pitch
+                const SKY_MAX = 2.5;    // px · farthest layer, moves least
+                const FG_MAX  = 6;      // px · middle layer (grass)
+                const MASCOT_MAX = FG_MAX; // Mascot locks to foreground so
+                                           // the dog stays planted on the grass
+                                           // as the scene parallaxes.
+                let rafId = null;
+                let pendingX = 0, pendingY = 0;
+
+                const apply = () => {
+                    // Device frame · only x-axis tilt (pitch up/down) from
+                    // vertical mouse position · no y-axis tilt (no side sway).
+                    deviceFrame.style.setProperty('--phone-tilt-x', `${-pendingY * MAX_TILT}deg`);
+
+                    // Scene layers · shift ONLY on the y-axis · nearer
+                    // layers slide more than farther ones.
+                    if (sky) {
+                        sky.style.setProperty('--sky-py', `${-pendingY * SKY_MAX}px`);
+                    }
+                    if (fg) {
+                        fg.style.setProperty('--fg-py', `${-pendingY * FG_MAX}px`);
+                    }
+                    if (mascot) {
+                        mascot.style.setProperty('--mascot-py', `${-pendingY * MASCOT_MAX}px`);
+                    }
+
+                    rafId = null;
+                };
+
+                heroStage.addEventListener('mousemove', (e) => {
+                    const rect = heroStage.getBoundingClientRect();
+                    pendingX = ((e.clientX - rect.left) / rect.width) - 0.5;  // -0.5 to 0.5
+                    pendingY = ((e.clientY - rect.top) / rect.height) - 0.5;
+                    if (!rafId) rafId = requestAnimationFrame(apply);
+                });
+
+                heroStage.addEventListener('mouseleave', () => {
+                    deviceFrame.style.removeProperty('--phone-tilt-x');
+                    if (sky) sky.style.removeProperty('--sky-py');
+                    if (fg) fg.style.removeProperty('--fg-py');
+                    if (mascot) mascot.style.removeProperty('--mascot-py');
+                });
+            }
+
+            // --- 5. Feature mockup content · animate contents when visible ---
+            // Adds `.is-content-visible` class (CSS drives ring fill, bar
+            // rise, calendar dot stagger) AND animates any child numbers
+            // tagged with `data-mockup-count` (count-up with formatter).
+            const animateNumber = (el, duration = 1200) => {
+                const target = parseFloat(el.dataset.mockupCount);
+                const format = el.dataset.format || 'number';
+                const formatter = (v) => {
+                    if (format === 'duration') {
+                        const mins = Math.round(v);
+                        const h = Math.floor(mins / 60);
+                        const m = mins % 60;
+                        return h > 0 ? `${h}h ${m}m` : `${m}m`;
+                    }
+                    return Math.round(v).toLocaleString();
+                };
+                const start = performance.now();
+                const tick = (now) => {
+                    const elapsed = now - start;
+                    const t = Math.min(1, elapsed / duration);
+                    const eased = 1 - Math.pow(1 - t, 3);
+                    el.textContent = formatter(target * eased);
+                    if (t < 1) requestAnimationFrame(tick);
+                };
+                requestAnimationFrame(tick);
+            };
+
+            if (!reduceMotion && 'IntersectionObserver' in window) {
+                const mockupObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-content-visible');
+                            // Animate any count-up numbers inside this mockup
+                            entry.target.querySelectorAll('[data-mockup-count]')
+                                .forEach(el => animateNumber(el));
+                            mockupObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.35 });
+
+                document.querySelectorAll('.feature-mockup').forEach(m => mockupObserver.observe(m));
+            } else {
+                // Reduce motion · show final values immediately
+                document.querySelectorAll('[data-mockup-count]').forEach(el => {
+                    const target = parseFloat(el.dataset.mockupCount);
+                    if (el.dataset.format === 'duration') {
+                        const h = Math.floor(target / 60);
+                        const m = target % 60;
+                        el.textContent = h > 0 ? `${h}h ${m}m` : `${m}m`;
+                    } else {
+                        el.textContent = Math.round(target).toLocaleString();
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
