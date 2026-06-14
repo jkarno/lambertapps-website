@@ -22,13 +22,14 @@ When a second app ships, give it its own `/<app>/` folder and turn the apex
 
 Static, so any static host works. The repo root is the publish root.
 
-- **Netlify** (current setup): connect this repo; `netlify.toml` sets
-  `publish = "."`. Custom domain `lambertapps.com` via DNS at the registrar
-  (Squarespace).
-- **GitHub Pages**: enable Pages on the default branch (root). For the custom
-  domain add a `CNAME` file containing `lambertapps.com` and the apex DNS
-  records GitHub provides.
-- **Cloudflare Pages**: connect the repo, build command empty, output dir `/`.
+- **GitHub Pages** (current setup): Settings -> Pages -> Deploy from branch,
+  `main` / root. The `CNAME` file pins the custom domain `lambertapps.com`;
+  `.nojekyll` serves files as-is. Apex DNS at the registrar (Squarespace) points
+  at GitHub's Pages IPs. Auto-deploys on every push to `main`.
+- **Netlify** (alternative): connect the repo; `netlify.toml` sets
+  `publish = "."`. Custom domain via an A record at Squarespace.
+- **Cloudflare Pages** (alternative): connect the repo, build command empty,
+  output dir `/`.
 
 ## Notes
 
