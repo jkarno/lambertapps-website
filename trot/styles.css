@@ -1329,7 +1329,11 @@ h1, h2, h3, p { margin: 0; }
 }
 
 .doc-hero {
-  padding: var(--s-6) 0 var(--s-7);
+  /* Only set the vertical padding · the horizontal inset is owned by
+     `.narrow` (padding: 0 var(--s-5)), which sits on the same element.
+     Using the `padding` shorthand here would reset the left/right padding
+     to 0 and make the hero heading/intro run edge-to-edge on phones. */
+  padding-block: var(--s-6) var(--s-7);
   text-align: left;
 }
 
@@ -1532,7 +1536,7 @@ h1, h2, h3, p { margin: 0; }
 
 @media (max-width: 680px) {
   .doc-surface { padding: var(--s-5) var(--s-4); }
-  .doc-hero { padding: var(--s-5) 0 var(--s-6); }
+  .doc-hero { padding-block: var(--s-5) var(--s-6); }
 }
 
 /* 8c · Dark mode ----------------------------------------------------- */
