@@ -11,47 +11,20 @@
     <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
     <link rel="apple-touch-icon" sizes="512x512" href="favicon-512.png">
     <meta name="apple-mobile-web-app-title" content="Trot">
-    <meta name="theme-color" content="#34C759">
+    <meta name="theme-color" content="#34C759" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0F1512" media="(prefers-color-scheme: dark)">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Trot · Terms of Use">
-    <meta property="og:description" content="The basics of using Trot · subscriptions, health disclaimers, acceptable use.">
-    <meta property="og:image" content="app-icon.png">
+    <meta property="og:url" content="https://lambertapps.com/trot/terms.html">
+    <meta property="og:title" content="Trot Terms of Use">
+    <meta property="og:description" content="The basics of using Trot - subscriptions, health disclaimers, acceptable use.">
+    <meta property="og:image" content="https://lambertapps.com/trot/app-icon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="styles.css">
-    <script>
-        // Theme (light / dark). Runs in the head BEFORE first paint so there's
-        // no flash of light mode for returning dark-mode users.
-        (() => {
-            const apply = (theme) => {
-                if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-                else document.documentElement.removeAttribute('data-theme');
-            };
-            try { apply(localStorage.getItem('trot-theme')); } catch (e) {}
-
-            // Delegated click handler · works even though the button may not
-            // exist yet when this script runs (head fires before body parses).
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('[data-theme-toggle]')) return;
-                const current = document.documentElement.getAttribute('data-theme');
-                const next = current === 'dark' ? 'light' : 'dark';
-                // Freeze transitions during the swap so the scene/chrome
-                // don't animate · eliminates the day→night glitch.
-                document.documentElement.classList.add('theme-toggling');
-                apply(next);
-                try { localStorage.setItem('trot-theme', next); } catch (e) {}
-                // Re-enable transitions on the next frame.
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        document.documentElement.classList.remove('theme-toggling');
-                    });
-                });
-            });
-        })();
-    </script>
+    <script src="theme.js"></script>
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to main content</a>
@@ -68,10 +41,10 @@
                 <a href="index.html">Home</a>
                 <a href="support.html">Support</a>
                 <button type="button" class="theme-toggle" aria-label="Toggle dark mode" data-theme-toggle>
-                    <i class="ph ph-moon toggle-icon toggle-icon-moon" aria-hidden="true"></i>
-                    <i class="ph ph-sun toggle-icon toggle-icon-sun" aria-hidden="true"></i>
+                    <svg class="toggle-icon toggle-icon-moon" viewBox="0 0 256 256" aria-hidden="true"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg>
+                    <svg class="toggle-icon toggle-icon-sun" viewBox="0 0 256 256" aria-hidden="true"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg>
                 </button>
-                                <a href="https://apps.apple.com/app/id6761860133" class="button-link">Download</a>
+                <a href="https://apps.apple.com/app/id6761860133" class="button-link">Download</a>
             </div>
         </nav>
     </header>
@@ -117,7 +90,7 @@
                         <li>Any unused portion of a free trial is forfeited when the trial converts to a paid subscription.</li>
                         <li>Payment is charged to your Apple ID at confirmation of purchase.</li>
                         <li>Subscriptions renew automatically at the same price unless canceled at least 24 hours before the end of the current billing period. Your Apple ID will be charged within 24 hours before renewal.</li>
-                        <li>You can manage or cancel your subscription at any time from <strong>iOS Settings → your name → Subscriptions</strong>.</li>
+                        <li>You can manage or cancel your subscription at any time in <strong>iOS Settings</strong>. Tap your name, then <strong>Subscriptions</strong>.</li>
                     </ul>
                 </section>
 

@@ -11,47 +11,20 @@
     <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
     <link rel="apple-touch-icon" sizes="512x512" href="favicon-512.png">
     <meta name="apple-mobile-web-app-title" content="Trot">
-    <meta name="theme-color" content="#34C759">
+    <meta name="theme-color" content="#34C759" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0F1512" media="(prefers-color-scheme: dark)">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Trot · Privacy Policy">
+    <meta property="og:url" content="https://lambertapps.com/trot/privacy.html">
+    <meta property="og:title" content="Trot Privacy Policy">
     <meta property="og:description" content="How Trot handles your Health data, motion sensors, analytics, and subscriptions.">
-    <meta property="og:image" content="app-icon.png">
+    <meta property="og:image" content="https://lambertapps.com/trot/app-icon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="styles.css">
-    <script>
-        // Theme (light / dark). Runs in the head BEFORE first paint so there's
-        // no flash of light mode for returning dark-mode users.
-        (() => {
-            const apply = (theme) => {
-                if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-                else document.documentElement.removeAttribute('data-theme');
-            };
-            try { apply(localStorage.getItem('trot-theme')); } catch (e) {}
-
-            // Delegated click handler · works even though the button may not
-            // exist yet when this script runs (head fires before body parses).
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('[data-theme-toggle]')) return;
-                const current = document.documentElement.getAttribute('data-theme');
-                const next = current === 'dark' ? 'light' : 'dark';
-                // Freeze transitions during the swap so the scene/chrome
-                // don't animate · eliminates the day→night glitch.
-                document.documentElement.classList.add('theme-toggling');
-                apply(next);
-                try { localStorage.setItem('trot-theme', next); } catch (e) {}
-                // Re-enable transitions on the next frame.
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        document.documentElement.classList.remove('theme-toggling');
-                    });
-                });
-            });
-        })();
-    </script>
+    <script src="theme.js"></script>
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to main content</a>
@@ -68,10 +41,10 @@
                 <a href="index.html">Home</a>
                 <a href="support.html">Support</a>
                 <button type="button" class="theme-toggle" aria-label="Toggle dark mode" data-theme-toggle>
-                    <i class="ph ph-moon toggle-icon toggle-icon-moon" aria-hidden="true"></i>
-                    <i class="ph ph-sun toggle-icon toggle-icon-sun" aria-hidden="true"></i>
+                    <svg class="toggle-icon toggle-icon-moon" viewBox="0 0 256 256" aria-hidden="true"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg>
+                    <svg class="toggle-icon toggle-icon-sun" viewBox="0 0 256 256" aria-hidden="true"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg>
                 </button>
-                                <a href="https://apps.apple.com/app/id6761860133" class="button-link">Download</a>
+                <a href="https://apps.apple.com/app/id6761860133" class="button-link">Download</a>
             </div>
         </nav>
     </header>
@@ -81,7 +54,7 @@
             <div class="doc-overline">Privacy</div>
             <h1 class="doc-title">Your health data stays on your device.</h1>
             <p class="doc-copy">Trot reads the data it needs to count your steps and power your companion. Nothing related to your walks or health leaves your iPhone.</p>
-            <div class="doc-meta">Last updated: June 20, 2026</div>
+            <div class="doc-meta">Last updated: July 7, 2026</div>
         </section>
 
         <div class="narrow doc-layout">
@@ -101,6 +74,7 @@
                         <li>Walking + running distance</li>
                         <li>Flights climbed</li>
                         <li>Active energy burned</li>
+                        <li>Exercise minutes (Apple Exercise Time)</li>
                         <li>Live motion data for real-time step counting while the app is open</li>
                     </ul>
                     <p>All of this is processed on your iPhone. We do not upload, transmit, or share your health data with any server, third party, or cloud service. We do not operate a backend that stores any of it.</p>
@@ -118,13 +92,16 @@
                         <li>Screens viewed and buttons tapped (e.g., "paywall shown", "goal changed")</li>
                         <li>Session length and frequency</li>
                         <li>Which subscription plan you buy and whether a free trial was used</li>
-                        <li>Anonymous crash and performance diagnostics (that a crash or hang occurred, plus the OS and app version) with no symbols, stack traces, or personal content</li>
+                        <li>Anonymous crash and hang counts (that a crash or hang occurred, plus the OS and app version) with no personal content. Detailed crash reports go through Firebase Crashlytics, described below.</li>
                         <li>Device type, iOS version, and app version</li>
                     </ul>
                     <p>Analytics events do not include your step count, distance, or any other Health or Fitness data, and never your name, email, or any other personally identifying information. They are tied to a random anonymous identifier generated on-device, not to your name or Apple ID.</p>
 
+                    <h3>Crash reports (Firebase Crashlytics)</h3>
+                    <p>When the app crashes, Firebase Crashlytics collects a crash report so we can find and fix the bug. A report includes the technical stack trace of the crash, your device model, iOS version, and app version. Crash reports are not tied to your name or Apple ID, and they never include Health data, your pet's name, or anything you typed in the app.</p>
+
                     <h3>Advertising (Google AdMob, free tier only)</h3>
-                    <p>The free version of Trot displays ads through Google AdMob. Because Trot skips App Tracking Transparency (ATT), AdMob only serves <strong>non-personalized ads</strong>: they are not targeted to your browsing history or interests, and Trot collects no advertising identifier (IDFA). Google may use a device identifier to limit how often you see the same ad and to prevent fraud, but not to build an advertising profile of you. Trot Pro subscribers do not see ads.</p>
+                    <p>The free version of Trot displays ads through Google AdMob. Trot never requests the App Tracking Transparency permission, so it collects no advertising identifier (IDFA) and ads are not based on your activity in other apps. In regions that require consent, Google's consent form controls how ads may be selected. Google may use a device identifier to limit how often you see the same ad and to prevent fraud. Trot Pro subscribers do not see ads.</p>
 
                     <h3>Subscriptions (Apple + RevenueCat)</h3>
                     <p>Subscription purchases are processed by Apple's App Store and orchestrated through RevenueCat. We receive anonymized subscription state (active / cancelled / trial) and a transaction ID. We do not receive your name, payment details, or Apple ID.</p>
@@ -136,7 +113,8 @@
                         <li><strong>Apple HealthKit</strong> for on-device Health data access only.</li>
                         <li><strong>Apple StoreKit</strong> for subscription billing.</li>
                         <li><strong>Mixpanel</strong> for anonymous product analytics.</li>
-                        <li><strong>Google AdMob</strong> for non-personalized ads in the free tier.</li>
+                        <li><strong>Firebase Crashlytics</strong> for crash reporting.</li>
+                        <li><strong>Google AdMob</strong> for ads in the free tier.</li>
                         <li><strong>RevenueCat</strong> for subscription state management.</li>
                     </ul>
                 </section>
@@ -150,10 +128,9 @@
                     <h2>Your rights</h2>
                     <p>You can:</p>
                     <ul>
-                        <li>Revoke Health and Motion permissions at any time from <strong>iOS Settings → Privacy &amp; Security</strong>.</li>
-                        <li>Clear your Trot data from <strong>Trot → Settings → Reset App Data</strong>.</li>
-                        <li>Cancel a subscription from <strong>iOS Settings → your name → Subscriptions</strong>.</li>
-                        <li>Uninstall the app to remove all locally stored data.</li>
+                        <li>Revoke Health and Motion permissions at any time in <strong>iOS Settings</strong>, under <strong>Privacy &amp; Security</strong>.</li>
+                        <li>Cancel a subscription in <strong>iOS Settings</strong>. Tap your name, then <strong>Subscriptions</strong>.</li>
+                        <li>Uninstall the app to delete your pet, goal, history cache, and all other locally stored data.</li>
                     </ul>
                 </section>
 

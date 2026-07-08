@@ -7,10 +7,13 @@ own path so more can be added later without restructuring:
 
 ```
 /                 -> redirects to /trot/ (the only app for now)
+/404.html         -> branded not-found page (GitHub Pages serves it automatically)
+/favicon.ico      -> root favicon for crawlers and old browsers
 /trot/            -> Trot landing page
 /trot/privacy.html
 /trot/terms.html
 /trot/support.html
+/trot/theme.js    -> shared light/dark init + toggle, loaded in every head
 /trot/sitemap.xml
 /robots.txt
 ```
@@ -39,3 +42,8 @@ Static, so any static host works. The repo root is the publish root.
   keep the `/trot/*.html` paths stable.
 - `trot/support.html` is mirrored by the in-app FAQ (`FAQScreen.swift` in the
   Trot app repo); keep the two in sync when either changes.
+- Icons are inlined Phosphor SVGs (no icon-font CDN). Grab new ones from
+  `https://unpkg.com/@phosphor-icons/core/assets/<weight>/<name>.svg`.
+- `trot/assets/dawn-*` and `dusk-*` are not referenced yet. They are kept for
+  a possible time-of-day scene upgrade (currently only day and night are wired
+  to the theme toggle).

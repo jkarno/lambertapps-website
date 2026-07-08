@@ -12,30 +12,32 @@
     <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
     <link rel="apple-touch-icon" sizes="512x512" href="favicon-512.png">
     <meta name="apple-mobile-web-app-title" content="Trot">
-    <meta name="theme-color" content="#34C759">
+    <meta name="theme-color" content="#34C759" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0F1512" media="(prefers-color-scheme: dark)">
 
     <!-- Open Graph / social -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Trot · Your walking companion">
+    <meta property="og:url" content="https://lambertapps.com/trot/">
+    <meta property="og:title" content="Trot - Walk More With a Step Counter Pet">
     <meta property="og:description" content="A step counter with a reactive pet. Track your daily walks, build streaks, and watch your trends grow.">
-    <meta property="og:image" content="app-icon.png">
+    <meta property="og:image" content="https://lambertapps.com/trot/app-icon.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Trot · Your walking companion">
+    <meta name="twitter:title" content="Trot - Walk More With a Step Counter Pet">
     <meta name="twitter:description" content="A step counter with a reactive pet. Track your daily walks, build streaks, and watch your trends grow.">
+    <meta name="twitter:image" content="https://lambertapps.com/trot/app-icon.png">
 
-    <!-- Fonts · Nunito as non-Apple fallback for SF Pro Rounded.
+    <!-- Fonts - Nunito as non-Apple fallback for SF Pro Rounded.
          On Apple devices `ui-rounded` in the CSS resolves to SF Pro Rounded
          natively, so Nunito only downloads on non-Apple clients. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap">
 
-    <!-- Phosphor icons · same library used in the app (Ph.pawPrint.fill, etc.) -->
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <!-- Icons are inlined as SVGs (Phosphor set, the same library the app
+         uses) so no third-party icon font blocks rendering. -->
     <link rel="stylesheet" href="styles.css">
 
-    <!-- JSON-LD · surfaces app info on Google rich results + search cards -->
+    <!-- JSON-LD - surfaces app info on Google rich results + search cards -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -94,36 +96,7 @@
         ]
     }
     </script>
-    <script>
-        // Theme (light / dark). Runs in the head BEFORE first paint so there's
-        // no flash of light mode for returning dark-mode users.
-        (() => {
-            const apply = (theme) => {
-                if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-                else document.documentElement.removeAttribute('data-theme');
-            };
-            try { apply(localStorage.getItem('trot-theme')); } catch (e) {}
-
-            // Delegated click handler · works even though the button may not
-            // exist yet when this script runs (head fires before body parses).
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('[data-theme-toggle]')) return;
-                const current = document.documentElement.getAttribute('data-theme');
-                const next = current === 'dark' ? 'light' : 'dark';
-                // Freeze transitions during the swap so the scene/chrome
-                // don't animate · eliminates the day→night glitch.
-                document.documentElement.classList.add('theme-toggling');
-                apply(next);
-                try { localStorage.setItem('trot-theme', next); } catch (e) {}
-                // Re-enable transitions on the next frame.
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        document.documentElement.classList.remove('theme-toggling');
-                    });
-                });
-            });
-        })();
-    </script>
+    <script src="theme.js"></script>
 </head>
 <body class="landing-page">
     <a href="#main" class="skip-link">Skip to main content</a>
@@ -140,8 +113,8 @@
                 <a href="#features">Features</a>
                 <a href="support.html">Support</a>
                 <button type="button" class="theme-toggle" aria-label="Toggle dark mode" data-theme-toggle>
-                    <i class="ph ph-moon toggle-icon toggle-icon-moon" aria-hidden="true"></i>
-                    <i class="ph ph-sun toggle-icon toggle-icon-sun" aria-hidden="true"></i>
+                    <svg class="toggle-icon toggle-icon-moon" viewBox="0 0 256 256" aria-hidden="true"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg>
+                    <svg class="toggle-icon toggle-icon-sun" viewBox="0 0 256 256" aria-hidden="true"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg>
                 </button>
                 <a href="https://apps.apple.com/app/id6761860133" class="button-link">Download</a>
             </div>
@@ -150,8 +123,6 @@
 
     <main id="main">
         <section class="hero">
-            <div class="hero-glow" aria-hidden="true"></div>
-
             <div class="container hero-grid">
                 <div class="hero-copy">
                     <div class="hero-kicker">Step counter for iPhone</div>
@@ -165,10 +136,10 @@
                 </div>
 
                 <div class="hero-stage" aria-hidden="true">
-                    <!-- Floating feature badges · give the phone a sense of
+                    <!-- Floating feature badges - give the phone a sense of
                          depth and call out what makes Trot worth downloading. -->
                     <div class="feature-chip chip-streak">
-                        <i class="ph-fill ph-flame" aria-hidden="true"></i>
+                        <i class="icon" aria-hidden="true"><svg viewBox="0 0 256 256"><path d="M173.79,51.48a221.25,221.25,0,0,0-41.67-34.34,8,8,0,0,0-8.24,0A221.25,221.25,0,0,0,82.21,51.48C54.59,80.48,40,112.47,40,144a88,88,0,0,0,176,0C216,112.47,201.41,80.48,173.79,51.48ZM96,184c0-27.67,22.53-47.28,32-54.3,9.48,7,32,26.63,32,54.3a32,32,0,0,1-64,0Z"/></svg></i>
                         <div>
                             <small>Streak</small>
                             <strong>7 days</strong>
@@ -176,7 +147,7 @@
                     </div>
 
                     <div class="feature-chip chip-mood">
-                        <i class="ph-fill ph-smiley" aria-hidden="true"></i>
+                        <i class="icon" aria-hidden="true"><svg viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM92,96a12,12,0,1,1-12,12A12,12,0,0,1,92,96Zm82.92,60c-10.29,17.79-27.39,28-46.92,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.08-20a8,8,0,1,1,13.84,8ZM164,120a12,12,0,1,1,12-12A12,12,0,0,1,164,120Z"/></svg></i>
                         <div>
                             <small>Mood</small>
                             <strong>Very happy</strong>
@@ -184,7 +155,7 @@
                     </div>
 
                     <div class="feature-chip chip-trends">
-                        <i class="ph-fill ph-chart-line-up" aria-hidden="true"></i>
+                        <i class="icon" aria-hidden="true"><svg viewBox="0 0 256 256"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM200,192H56a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v76.69l34.34-34.35a8,8,0,0,1,11.32,0L128,132.69,172.69,88H144a8,8,0,0,1,0-16h48a8,8,0,0,1,8,8v48a8,8,0,0,1-16,0V99.31l-50.34,50.35a8,8,0,0,1-11.32,0L104,131.31l-40,40V176H200a8,8,0,0,1,0,16Z"/></svg></i>
                         <div>
                             <small>This week</small>
                             <strong>+14% vs last</strong>
@@ -216,19 +187,19 @@
                             <div class="device-dock">
                                 <div class="dock-tabs" aria-hidden="true">
                                     <span class="dock-tab is-selected">
-                                        <i class="ph-fill ph-dog"></i>
+                                        <i class="icon"><svg viewBox="0 0 256 256"><path d="M239.71,125l-16.42-88a16,16,0,0,0-19.61-12.58l-.31.09L150.85,40h-45.7L52.63,24.56l-.31-.09A16,16,0,0,0,32.71,37.05L16.29,125a15.77,15.77,0,0,0,9.12,17.52A16.26,16.26,0,0,0,32.12,144,15.48,15.48,0,0,0,40,141.84V184a40,40,0,0,0,40,40h96a40,40,0,0,0,40-40V141.85a15.5,15.5,0,0,0,7.87,2.16,16.31,16.31,0,0,0,6.72-1.47A15.77,15.77,0,0,0,239.71,125ZM176,208H136V195.31l13.66-13.65a8,8,0,0,0-11.32-11.32L128,180.69l-10.34-10.35a8,8,0,0,0-11.32,11.32L120,195.31V208H80a24,24,0,0,1-24-24V123.11L107.93,56h40.14L200,123.11V184A24,24,0,0,1,176,208Zm-72-68a12,12,0,1,1-12-12A12,12,0,0,1,104,140Zm72,0a12,12,0,1,1-12-12A12,12,0,0,1,176,140Z"/></svg></i>
                                         <small>Today</small>
                                     </span>
                                     <span class="dock-tab">
-                                        <i class="ph ph-notepad"></i>
+                                        <i class="icon"><svg viewBox="0 0 256 256"><path d="M168,128a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,128Zm-8,24H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16ZM216,40V200a32,32,0,0,1-32,32H72a32,32,0,0,1-32-32V40a8,8,0,0,1,8-8H72V24a8,8,0,0,1,16,0v8h32V24a8,8,0,0,1,16,0v8h32V24a8,8,0,0,1,16,0v8h24A8,8,0,0,1,216,40Zm-16,8H184v8a8,8,0,0,1-16,0V48H136v8a8,8,0,0,1-16,0V48H88v8a8,8,0,0,1-16,0V48H56V200a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16Z"/></svg></i>
                                         <small>Insights</small>
                                     </span>
                                     <span class="dock-tab">
-                                        <i class="ph ph-chart-bar"></i>
+                                        <i class="icon"><svg viewBox="0 0 256 256"><path d="M224,200h-8V40a8,8,0,0,0-8-8H152a8,8,0,0,0-8,8V80H96a8,8,0,0,0-8,8v40H48a8,8,0,0,0-8,8v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16ZM160,48h40V200H160ZM104,96h40V200H104ZM56,144H88v56H56Z"/></svg></i>
                                         <small>Trends</small>
                                     </span>
                                     <span class="dock-tab">
-                                        <i class="ph ph-gear"></i>
+                                        <i class="icon"><svg viewBox="0 0 256 256"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm88-29.84q.06-2.16,0-4.32l14.92-18.64a8,8,0,0,0,1.48-7.06,107.21,107.21,0,0,0-10.88-26.25,8,8,0,0,0-6-3.93l-23.72-2.64q-1.48-1.56-3-3L186,40.54a8,8,0,0,0-3.94-6,107.71,107.71,0,0,0-26.25-10.87,8,8,0,0,0-7.06,1.49L130.16,40Q128,40,125.84,40L107.2,25.11a8,8,0,0,0-7.06-1.48A107.6,107.6,0,0,0,73.89,34.51a8,8,0,0,0-3.93,6L67.32,64.27q-1.56,1.49-3,3L40.54,70a8,8,0,0,0-6,3.94,107.71,107.71,0,0,0-10.87,26.25,8,8,0,0,0,1.49,7.06L40,125.84Q40,128,40,130.16L25.11,148.8a8,8,0,0,0-1.48,7.06,107.21,107.21,0,0,0,10.88,26.25,8,8,0,0,0,6,3.93l23.72,2.64q1.49,1.56,3,3L70,215.46a8,8,0,0,0,3.94,6,107.71,107.71,0,0,0,26.25,10.87,8,8,0,0,0,7.06-1.49L125.84,216q2.16.06,4.32,0l18.64,14.92a8,8,0,0,0,7.06,1.48,107.21,107.21,0,0,0,26.25-10.88,8,8,0,0,0,3.93-6l2.64-23.72q1.56-1.48,3-3L215.46,186a8,8,0,0,0,6-3.94,107.71,107.71,0,0,0,10.87-26.25,8,8,0,0,0-1.49-7.06Zm-16.1-6.5a73.93,73.93,0,0,1,0,8.68,8,8,0,0,0,1.74,5.48l14.19,17.73a91.57,91.57,0,0,1-6.23,15L187,173.11a8,8,0,0,0-5.1,2.64,74.11,74.11,0,0,1-6.14,6.14,8,8,0,0,0-2.64,5.1l-2.51,22.58a91.32,91.32,0,0,1-15,6.23l-17.74-14.19a8,8,0,0,0-5-1.75h-.48a73.93,73.93,0,0,1-8.68,0,8,8,0,0,0-5.48,1.74L100.45,215.8a91.57,91.57,0,0,1-15-6.23L82.89,187a8,8,0,0,0-2.64-5.1,74.11,74.11,0,0,1-6.14-6.14,8,8,0,0,0-5.1-2.64L46.43,170.6a91.32,91.32,0,0,1-6.23-15l14.19-17.74a8,8,0,0,0,1.74-5.48,73.93,73.93,0,0,1,0-8.68,8,8,0,0,0-1.74-5.48L40.2,100.45a91.57,91.57,0,0,1,6.23-15L69,82.89a8,8,0,0,0,5.1-2.64,74.11,74.11,0,0,1,6.14-6.14A8,8,0,0,0,82.89,69L85.4,46.43a91.32,91.32,0,0,1,15-6.23l17.74,14.19a8,8,0,0,0,5.48,1.74,73.93,73.93,0,0,1,8.68,0,8,8,0,0,0,5.48-1.74L155.55,40.2a91.57,91.57,0,0,1,15,6.23L173.11,69a8,8,0,0,0,2.64,5.1,74.11,74.11,0,0,1,6.14,6.14,8,8,0,0,0,5.1,2.64l22.58,2.51a91.32,91.32,0,0,1,6.23,15l-14.19,17.74A8,8,0,0,0,199.87,123.66Z"/></svg></i>
                                         <small>Settings</small>
                                     </span>
                                 </div>
@@ -254,12 +225,12 @@
                         </div>
                         <div class="feature-content">
                             <h3>A motivational pet</h3>
-                            <p>Your pet's mood reflects how you're walking. Hit your goal and they perk up; slow days show too, so progress is easy to feel.</p>
+                            <p>Your pet's mood reflects how you're walking. Hit your goal and they perk up. Slow days show too, so progress is easy to feel.</p>
                         </div>
                     </article>
 
                     <article class="feature-item">
-                        <div class="feature-mockup feature-mockup-insights">
+                        <div class="feature-mockup feature-mockup-insights" aria-hidden="true">
                             <div class="mini-ring">
                                 <div class="mini-ring-inner">
                                     <strong data-mockup-count="7448" data-format="number">0</strong>
@@ -267,7 +238,7 @@
                                 </div>
                             </div>
                             <div class="mini-stat">
-                                <i class="ph-fill ph-timer" aria-hidden="true"></i>
+                                <i class="icon"><svg viewBox="0 0 256 256"><path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm45.66,61.66-40,40a8,8,0,0,1-11.32-11.32l40-40a8,8,0,0,1,11.32,11.32ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"/></svg></i>
                                 <strong data-mockup-count="72" data-format="duration">0m</strong>
                                 <span>Active</span>
                             </div>
@@ -279,7 +250,7 @@
                     </article>
 
                     <article class="feature-item">
-                        <div class="feature-mockup feature-mockup-history">
+                        <div class="feature-mockup feature-mockup-history" aria-hidden="true">
                             <div class="mini-calendar-label">March 2026</div>
                             <div class="mini-calendar">
                                 <span style="--fill: 0.3;"></span>
@@ -306,17 +277,17 @@
                             </div>
                         </div>
                         <div class="feature-content">
-                            <h3>Historical data</h3>
+                            <h3>Historical data <span class="pro-chip">Trot Pro</span></h3>
                             <p>Every day, week, and month of your walking history, saved and ready to scroll back through.</p>
                         </div>
                     </article>
 
                     <article class="feature-item">
-                        <div class="feature-mockup feature-mockup-trends">
+                        <div class="feature-mockup feature-mockup-trends" aria-hidden="true">
                             <div class="mini-trend-label">
                                 <span>This year</span>
                                 <strong class="mini-trend-delta">
-                                    <i class="ph-fill ph-trend-up" aria-hidden="true"></i>
+                                    <i class="icon"><svg viewBox="0 0 256 256"><path d="M240,56v64a8,8,0,0,1-13.66,5.66L200,99.31l-58.34,58.35a8,8,0,0,1-11.32,0L96,123.31,29.66,189.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0L136,140.69,188.69,88,162.34,61.66A8,8,0,0,1,168,48h64A8,8,0,0,1,240,56Z"/></svg></i>
                                     +18%
                                 </strong>
                             </div>
@@ -336,16 +307,16 @@
                             </div>
                         </div>
                         <div class="feature-content">
-                            <h3>Long-term trends</h3>
+                            <h3>Long-term trends <span class="pro-chip">Trot Pro</span></h3>
                             <p>Week, month, and year views show whether your walks are adding up into a real habit.</p>
                         </div>
                     </article>
 
                     <article class="feature-item">
-                        <div class="feature-mockup feature-mockup-widgets">
+                        <div class="feature-mockup feature-mockup-widgets" aria-hidden="true">
                             <div class="widget-card">
                                 <div class="widget-card-top">
-                                    <i class="ph-fill ph-paw-print" aria-hidden="true"></i>
+                                    <i class="icon"><svg viewBox="0 0 256 256"><path d="M240,108a28,28,0,1,1-28-28A28,28,0,0,1,240,108ZM72,108a28,28,0,1,0-28,28A28,28,0,0,0,72,108ZM92,88A28,28,0,1,0,64,60,28,28,0,0,0,92,88Zm72,0a28,28,0,1,0-28-28A28,28,0,0,0,164,88Zm23.12,60.86a35.3,35.3,0,0,1-16.87-21.14,44,44,0,0,0-84.5,0A35.25,35.25,0,0,1,69,148.82,40,40,0,0,0,88,224a39.48,39.48,0,0,0,15.52-3.13,64.09,64.09,0,0,1,48.87,0,40,40,0,0,0,34.73-72Z"/></svg></i>
                                     <span>Today</span>
                                 </div>
                                 <strong data-mockup-count="7448" data-format="number">0</strong>
@@ -354,7 +325,7 @@
                             </div>
                         </div>
                         <div class="feature-content">
-                            <h3>Steps at a glance</h3>
+                            <h3>Steps at a glance <span class="pro-chip">Trot Pro</span></h3>
                             <p>Home and Lock Screen widgets keep today's count in view, so you never have to open the app to check in.</p>
                         </div>
                     </article>
@@ -395,7 +366,7 @@
 
     <script>
         // =====================================================
-        // Trot landing · motion + micro-interactions
+        // Trot landing - motion + micro-interactions
         // =====================================================
         (() => {
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -440,33 +411,23 @@
                 }
             }
 
-            // --- 3. Live data ticks · chart bar + step count every ~6s ---
+            // --- 3. Live data tick - step count creeps up every ~6s ---
             // Pauses automatically when the hero scrolls out of view so we
             // don't burn CPU/battery updating elements no one is looking at.
             if (!reduceMotion && countEl) {
-                const bars = document.querySelectorAll('.chart-bars span:not(.is-rest)');
                 const hero = document.querySelector('.hero');
+                // Stop just shy of the 8,000 goal so the frozen progress bar
+                // and "of 8,000 steps" caption stay honest on long visits.
+                const STEP_CAP = 7995;
                 let liveStep = parseInt(countEl.dataset.countTo, 10);
                 let intervalId = null;
                 let tickingAllowed = false;   // flipped after initial delay
                 let heroVisible = true;       // default true; observer overrides
 
-                // Only the rightmost non-rest bar represents "current hour"
-                // · it's the one that grows as the user accumulates steps.
-                // Earlier bars are historical and shouldn't change.
-                const currentHourBar = bars[bars.length - 1];
-
                 const tick = () => {
-                    liveStep += Math.floor(Math.random() * 4) + 1;
+                    if (liveStep >= STEP_CAP) return;
+                    liveStep = Math.min(STEP_CAP, liveStep + Math.floor(Math.random() * 4) + 1);
                     countEl.textContent = liveStep.toLocaleString();
-                    if (currentHourBar) {
-                        const current = parseFloat(currentHourBar.style.getPropertyValue('--h')) || 50;
-                        // Bias upward · current-hour activity grows as steps tick up
-                        const delta = Math.random() * 3 + 0.5;
-                        const next = Math.min(92, current + delta);
-                        currentHourBar.style.setProperty('--h', `${next.toFixed(1)}%`);
-                        currentHourBar.style.transition = 'height 500ms var(--ease-out)';
-                    }
                 };
 
                 const startInterval = () => {
@@ -503,9 +464,9 @@
             const fg = document.querySelector('.scene-foreground');
             const mascot = document.querySelector('.device-mascot');
             if (!reduceMotion && heroStage && deviceFrame && matchMedia('(hover: hover)').matches) {
-                const MAX_TILT = 1.25;  // degrees · 25% of previous, subtle pitch
-                const SKY_MAX = 2.5;    // px · farthest layer, moves least
-                const FG_MAX  = 6;      // px · middle layer (grass)
+                const MAX_TILT = 1.25;  // degrees - 25% of previous, subtle pitch
+                const SKY_MAX = 2.5;    // px - farthest layer, moves least
+                const FG_MAX  = 6;      // px - middle layer (grass)
                 const MASCOT_MAX = FG_MAX; // Mascot locks to foreground so
                                            // the dog stays planted on the grass
                                            // as the scene parallaxes.
@@ -513,11 +474,11 @@
                 let pendingX = 0, pendingY = 0;
 
                 const apply = () => {
-                    // Device frame · only x-axis tilt (pitch up/down) from
-                    // vertical mouse position · no y-axis tilt (no side sway).
+                    // Device frame - only x-axis tilt (pitch up/down) from
+                    // vertical mouse position - no y-axis tilt (no side sway).
                     deviceFrame.style.setProperty('--phone-tilt-x', `${-pendingY * MAX_TILT}deg`);
 
-                    // Scene layers · shift ONLY on the y-axis · nearer
+                    // Scene layers - shift ONLY on the y-axis - nearer
                     // layers slide more than farther ones.
                     if (sky) {
                         sky.style.setProperty('--sky-py', `${-pendingY * SKY_MAX}px`);
@@ -547,7 +508,7 @@
                 });
             }
 
-            // --- 5. Feature mockup content · animate contents when visible ---
+            // --- 5. Feature mockup content - animate contents when visible ---
             // Adds `.is-content-visible` class (CSS drives ring fill, bar
             // rise, calendar dot stagger) AND animates any child numbers
             // tagged with `data-mockup-count` (count-up with formatter).
@@ -589,7 +550,9 @@
 
                 document.querySelectorAll('.feature-mockup').forEach(m => mockupObserver.observe(m));
             } else {
-                // Reduce motion · show final values immediately
+                // Reduced motion or no IntersectionObserver - reveal every
+                // mockup's contents and show final values immediately.
+                document.querySelectorAll('.feature-mockup').forEach(m => m.classList.add('is-content-visible'));
                 document.querySelectorAll('[data-mockup-count]').forEach(el => {
                     const target = parseFloat(el.dataset.mockupCount);
                     if (el.dataset.format === 'duration') {

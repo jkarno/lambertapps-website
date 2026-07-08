@@ -1,14 +1,13 @@
 /* =====================================================
-   Trot · landing page · aligned with app design system
+   Trot - landing page - aligned with app design system
    ===================================================== */
 
-/* 1 · Design tokens -------------------------------------------------- */
+/* 1 - Design tokens -------------------------------------------------- */
 :root {
-  /* Brand greens */
-  --p-lime: #8BBF3A;
-  --p-lime-soft: rgba(139, 191, 58, 0.14);
+  /* Brand greens - mirror the app tokens (green / greenStrong) */
   --p-bright: #34C759;
   --p-bright-soft: rgba(52, 199, 89, 0.14);
+  --p-strong: #1F9D43;
   --p-dark: #14221C;
   --p-dark-muted: rgba(20, 34, 28, 0.68);
   --p-dark-subtle: rgba(20, 34, 28, 0.08);
@@ -27,7 +26,7 @@
   --hairline: rgba(20, 34, 28, 0.08);
   --hairline-strong: rgba(20, 34, 28, 0.14);
 
-  /* Typography · app uses SF Pro Rounded natively (Font.system(design: .rounded)).
+  /* Typography - app uses SF Pro Rounded natively (Font.system(design: .rounded)).
      Per the design system, WEB always uses Nunito for cross-platform consistency.
      "Nunito Fallback" is a size-adjusted local alias declared below so the
      swap from fallback -> Nunito doesn't cause layout shift (CLS) during
@@ -61,7 +60,7 @@
   initial-value: 0;
 }
 
-/* Metric-adjusted fallback for Nunito · aliases Arial with tweaked
+/* Metric-adjusted fallback for Nunito - aliases Arial with tweaked
    metrics so when Nunito arrives over the network the layout doesn't
    shift. Values derived from Nunito's font metrics. Eliminates the
    "page jumps down on reload" symptom that happens when a user's
@@ -75,7 +74,7 @@
   size-adjust: 101.7%;
 }
 
-/* 2 · Reset + base -------------------------------------------------- */
+/* 2 - Reset + base -------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
 
 /* Smooth scroll ONLY when the user clicks an in-page anchor, not for
@@ -86,7 +85,7 @@
    when entrance animations + image decodes land. */
 body { overflow-anchor: none; }
 
-/* Focus-visible · keyboard users get a clean green ring on every
+/* Focus-visible - keyboard users get a clean green ring on every
    interactive element. Mouse users don't see it (only :focus-visible). */
 :focus-visible {
   outline: 2px solid var(--p-bright);
@@ -94,7 +93,7 @@ body { overflow-anchor: none; }
   border-radius: 4px;
 }
 
-/* Skip-to-main-content link · hidden until focused, then pops in at top-left
+/* Skip-to-main-content link - hidden until focused, then pops in at top-left
    so keyboard / screen-reader users can jump past the nav. */
 .skip-link {
   position: absolute;
@@ -148,7 +147,17 @@ h1, h2, h3, p { margin: 0; }
   margin-bottom: var(--s-3);
 }
 
-/* 3 · Header + nav -------------------------------------------------- */
+/* Inline SVG icons (Phosphor set) - sized like the icon font they
+   replace: 1em square, filled with the surrounding text color. */
+.icon { display: inline-flex; }
+.icon svg,
+.toggle-icon {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+/* 3 - Header + nav -------------------------------------------------- */
 .site-header {
   position: sticky;
   top: 0;
@@ -240,14 +249,10 @@ h1, h2, h3, p { margin: 0; }
   .nav-links a:not(.button-link) { display: none; }
 }
 
-/* 4 · Hero section -------------------------------------------------- */
+/* 4 - Hero section -------------------------------------------------- */
 .hero {
   position: relative;
   padding: var(--s-9) 0 var(--s-8);
-}
-
-.hero-glow {
-  display: none;
 }
 
 .hero-grid {
@@ -334,7 +339,7 @@ h1, h2, h3, p { margin: 0; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* 5 · Phone mock + entry parallax ---------------------------------- */
+/* 5 - Phone mock + entry parallax ---------------------------------- */
 .hero-stage {
   position: relative;
   aspect-ratio: 9 / 19;
@@ -369,7 +374,7 @@ h1, h2, h3, p { margin: 0; }
 .hero-stage:hover .device-frame {
   box-shadow: 0 50px 100px -28px rgba(20, 34, 28, 0.42);
   /* JS removes the CSS transition while dragging mouse so tilt stays
-     responsive, restores on mouseleave. No lift/roll on hover · the
+     responsive, restores on mouseleave. No lift/roll on hover - the
      parallax effect carries the interaction. */
 }
 
@@ -395,7 +400,7 @@ h1, h2, h3, p { margin: 0; }
   z-index: 10;
 }
 
-/* Parallax scene layers · absolutely positioned, entry-animated */
+/* Parallax scene layers - absolutely positioned, entry-animated */
 .scene-layers {
   position: absolute;
   inset: 0;
@@ -403,11 +408,11 @@ h1, h2, h3, p { margin: 0; }
   z-index: 0;
 }
 
-/* Both scene images are 9:16-ish full-phone illustrations · display each
+/* Both scene images are 9:16-ish full-phone illustrations - display each
    at the full screen size and let the foreground's alpha sky-region
    layer on top of the sky. No cropping of the hill peaks. Parallax is
-   scroll-driven below via JS · the `--parallax` custom property is
-   updated live to slide each layer at a different speed. */
+   mouse-driven via JS, which updates each layer's custom property so
+   nearer layers slide farther than distant ones. */
 .scene-sky {
   position: absolute;
   inset: 0;
@@ -415,7 +420,7 @@ h1, h2, h3, p { margin: 0; }
   height: 100%;
   object-fit: cover;
   object-position: center;
-  /* Base offset · -50px up so parallax can drift the sky down without
+  /* Base offset - -50px up so parallax can drift the sky down without
      revealing a gap at the top of the phone screen. JS sets --py on top
      of this baseline. Sky moves the least (farthest layer). */
   transform: translateY(calc(-50px + var(--sky-py, 0px)));
@@ -429,13 +434,13 @@ h1, h2, h3, p { margin: 0; }
   height: 100%;
   object-fit: cover;
   object-position: center;
-  /* Parallax · moves more than the sky (closer layer). Base Y offset
-     stays 120px — mouse parallax translates on top of that. */
+  /* Parallax - moves more than the sky (closer layer). Base Y offset
+     stays 120px - mouse parallax translates on top of that. */
   transform: translateY(calc(120px + var(--fg-py, 0px)));
   transition: transform 220ms var(--ease-out);
 }
 
-/* Mascot · absolute positioned low on the foreground grass. JS applies
+/* Mascot - absolute positioned low on the foreground grass. JS applies
    a vertical translate on scroll (preserving the -50% centering). */
 .device-mascot {
   position: absolute;
@@ -443,7 +448,7 @@ h1, h2, h3, p { margin: 0; }
   bottom: calc(32% + 110px);
   width: 48%;
   z-index: 3;
-  /* Parallax · moves most (closest layer). Use translate3d so the -50%
+  /* Parallax - moves most (closest layer). Use translate3d so the -50%
      horizontal centering stays independent of the parallax Y offset. */
   transform: translate(-50%, var(--mascot-py, 0px));
   transition: transform 220ms var(--ease-out);
@@ -451,8 +456,8 @@ h1, h2, h3, p { margin: 0; }
   pointer-events: none;
 }
 
-/* Stats panel · absolute at bottom of screen, above the dock. JS applies
-   a vertical translate on scroll · rises from its rest position. */
+/* Stats panel - absolute at bottom of screen, above the dock. JS applies
+   a vertical translate on scroll - rises from its rest position. */
 .device-panel {
   position: absolute;
   left: 5%;
@@ -478,7 +483,7 @@ h1, h2, h3, p { margin: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* Minimal dashboard · eyebrow + big count + progress bar (matches the
+/* Minimal dashboard - eyebrow + big count + progress bar (matches the
    shipped Today card). */
 .device-eyebrow {
   text-align: center;
@@ -533,90 +538,7 @@ h1, h2, h3, p { margin: 0; }
   to { transform: scaleX(1); }
 }
 
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  color: var(--ink);
-  gap: 2px;
-}
-
-.stat > i {
-  font-size: 1rem;
-  color: var(--p-bright);
-  margin-bottom: 2px;
-}
-
-.stat strong {
-  font-size: 0.96rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.stat span {
-  font-size: 0.7rem;
-  color: var(--ink-muted);
-}
-
-.chart-section {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--hairline);
-}
-
-.chart-title {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--ink-muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.chart-bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 4px;
-  height: 40px;
-}
-
-.chart-bars span {
-  flex: 1;
-  height: var(--h);
-  min-height: 3px;
-  background: linear-gradient(180deg, var(--p-bright) 0%, #6ce59c 100%);
-  border-radius: 3px;
-  transform-origin: bottom;
-  animation: barRise 550ms var(--ease-out) both;
-}
-
-/* Stagger each bar after the card's slide-in completes (~1250ms) */
-.chart-bars span:nth-child(1) { animation-delay: 1050ms; }
-.chart-bars span:nth-child(2) { animation-delay: 1110ms; }
-.chart-bars span:nth-child(3) { animation-delay: 1170ms; }
-.chart-bars span:nth-child(4) { animation-delay: 1230ms; }
-.chart-bars span:nth-child(5) { animation-delay: 1290ms; }
-.chart-bars span:nth-child(6) { animation-delay: 1350ms; }
-.chart-bars span:nth-child(7) { animation-delay: 1410ms; }
-.chart-bars span:nth-child(8) { animation-delay: 1470ms; }
-
-.chart-bars span.is-rest {
-  background: var(--p-dark-subtle);
-}
-
-@keyframes barRise {
-  from { transform: scaleY(0); }
-  to { transform: scaleY(1); }
-}
-
-/* Dock · bottom of screen, pill with 4 icons · absolute so it anchors
+/* Dock - bottom of screen, pill with 4 icons - absolute so it anchors
    reliably regardless of scene/card transforms */
 .device-dock {
   position: absolute;
@@ -741,9 +663,9 @@ h1, h2, h3, p { margin: 0; }
   .hero-actions { justify-content: center; }
   .hero-stage { max-width: 300px; margin: 0 auto; }
 
-  /* Phone mock · the fixed-px offsets tuned for the ~380px desktop
+  /* Phone mock - the fixed-px offsets tuned for the ~380px desktop
      mock push foreground + mascot too low when the mock shrinks to
-     300px on mobile · scale them to percentages so they stay aligned
+     300px on mobile - scale them to percentages so they stay aligned
      with the horizon at any phone size. Dark mode inherits from the
      light rule since day and night foregrounds are pixel-aligned. */
   .scene-foreground {
@@ -760,11 +682,11 @@ h1, h2, h3, p { margin: 0; }
   }
 }
 
-/* 6 · Feature band -------------------------------------------------- */
+/* 6 - Feature band -------------------------------------------------- */
 .feature-band {
   padding: var(--s-9) 0 var(--s-8);
   background: var(--surface);
-  /* Soft transition from hero · subtle gradient at the top keeps the
+  /* Soft transition from hero - subtle gradient at the top keeps the
      handoff clean even if the hero's shadow extends slightly over it. */
   background-image: linear-gradient(180deg, var(--surface-tint) 0%, var(--surface) 120px);
 }
@@ -807,7 +729,7 @@ h1, h2, h3, p { margin: 0; }
   grid-template-columns: 200px 1fr;
   gap: var(--s-6);
   align-items: center;
-  /* Scroll-reveal initial state · JS flips `.is-visible` when the item
+  /* Scroll-reveal initial state - JS flips `.is-visible` when the item
      enters the viewport, triggering a gentle fade-up into place. */
   opacity: 0;
   transform: translateY(24px);
@@ -819,9 +741,6 @@ h1, h2, h3, p { margin: 0; }
 
 .feature-item.is-visible {
   will-change: auto;
-}
-
-.feature-item.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -872,13 +791,29 @@ h1, h2, h3, p { margin: 0; }
   margin-bottom: var(--s-2);
 }
 
+/* Pro chip - marks the feature cards that need a Trot Pro subscription */
+.pro-chip {
+  display: inline-block;
+  vertical-align: 2px;
+  margin-left: 6px;
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+  background: var(--p-bright-soft);
+  color: var(--p-strong);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .feature-content p {
   font-size: 0.98rem;
   color: var(--ink-muted);
   line-height: 1.55;
 }
 
-/* Per-feature mockups · backgrounds stay in the Trot green/sage palette
+/* Per-feature mockups - backgrounds stay in the Trot green/sage palette
    so the set reads as one system. Subtle tonal variation per card only. */
 .feature-mockup-pet {
   background: linear-gradient(135deg, #EEF5E5 0%, #D8E7C3 100%);
@@ -887,22 +822,6 @@ h1, h2, h3, p { margin: 0; }
 .feature-mockup-pet img {
   width: 82%;
   filter: drop-shadow(0 8px 14px rgba(18, 34, 22, 0.22));
-}
-
-.accent-paw {
-  position: absolute;
-  top: 14%;
-  right: 14%;
-  color: var(--p-bright);
-  font-size: 1.6rem;
-  filter: drop-shadow(0 3px 6px rgba(52, 199, 89, 0.45));
-  transform-origin: center;
-  animation: pawPulse 1.6s ease-in-out infinite;
-}
-
-@keyframes pawPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.18); }
 }
 
 .feature-mockup-insights {
@@ -919,7 +838,7 @@ h1, h2, h3, p { margin: 0; }
   height: 116px;
   border-radius: 50%;
   /* Start at 12 o'clock (from 0deg), sweep clockwise as --progress goes
-     0 → 0.82 when the mockup scrolls into view. */
+     0 to 0.82 when the mockup scrolls into view. */
   background: conic-gradient(
     from 0deg,
     var(--p-bright) calc(var(--progress) * 360deg),
@@ -1024,7 +943,7 @@ h1, h2, h3, p { margin: 0; }
   transform: scale(1);
 }
 
-/* Stagger calendar dot pop-in · each dot gets its own delay */
+/* Stagger calendar dot pop-in - each dot gets its own delay */
 .feature-mockup.is-content-visible .mini-calendar span:nth-child(1)  { transition-delay:   0ms; }
 .feature-mockup.is-content-visible .mini-calendar span:nth-child(2)  { transition-delay:  30ms; }
 .feature-mockup.is-content-visible .mini-calendar span:nth-child(3)  { transition-delay:  60ms; }
@@ -1113,7 +1032,7 @@ h1, h2, h3, p { margin: 0; }
   transform: scaleY(1);
 }
 
-/* Stagger bar rise · each bar gets its own delay */
+/* Stagger bar rise - each bar gets its own delay */
 .feature-mockup.is-content-visible .mini-bars span:nth-child(1)  { transition-delay:   0ms; }
 .feature-mockup.is-content-visible .mini-bars span:nth-child(2)  { transition-delay:  50ms; }
 .feature-mockup.is-content-visible .mini-bars span:nth-child(3)  { transition-delay: 100ms; }
@@ -1127,7 +1046,7 @@ h1, h2, h3, p { margin: 0; }
 .feature-mockup.is-content-visible .mini-bars span:nth-child(11) { transition-delay: 500ms; }
 .feature-mockup.is-content-visible .mini-bars span:nth-child(12) { transition-delay: 550ms; }
 
-/* Widgets feature · a Home-Screen card + a Lock-Screen accessory */
+/* Widgets feature - a Home-Screen card + a Lock-Screen accessory */
 .feature-mockup-widgets {
   display: flex;
   align-items: center;
@@ -1211,7 +1130,7 @@ h1, h2, h3, p { margin: 0; }
   .feature-content { max-width: 480px; margin: 0 auto; }
 }
 
-/* 7 · CTA band ------------------------------------------------------- */
+/* 7 - CTA band ------------------------------------------------------- */
 .cta-band {
   padding: var(--s-9) 0;
 }
@@ -1255,7 +1174,7 @@ h1, h2, h3, p { margin: 0; }
 
 .cta-copy p { color: var(--ink-muted); }
 
-/* CTA button · wider + centered in its grid cell for a more balanced
+/* CTA button - wider + centered in its grid cell for a more balanced
    right-column feel. Uses a min-width so short copy like 'Get Trot'
    doesn't leave the button hugging the text. */
 .cta-shell .primary-button {
@@ -1274,7 +1193,7 @@ h1, h2, h3, p { margin: 0; }
   .cta-mascot { margin: 0 auto; width: 120px; height: 120px; }
 }
 
-/* 8 · Footer --------------------------------------------------------- */
+/* 8 - Footer --------------------------------------------------------- */
 .site-footer {
   padding: var(--s-7) 0 var(--s-6);
   border-top: 1px solid var(--hairline);
@@ -1316,7 +1235,7 @@ h1, h2, h3, p { margin: 0; }
 
 .footer-links a:hover { color: var(--ink); }
 
-/* 8b · Document pages (privacy / terms / support) ------------------- */
+/* 8b - Document pages (privacy / terms / support) ------------------- */
 
 .docs-main {
   padding: var(--s-7) 0 var(--s-9);
@@ -1329,7 +1248,7 @@ h1, h2, h3, p { margin: 0; }
 }
 
 .doc-hero {
-  /* Only set the vertical padding · the horizontal inset is owned by
+  /* Only set the vertical padding - the horizontal inset is owned by
      `.narrow` (padding: 0 var(--s-5)), which sits on the same element.
      Using the `padding` shorthand here would reset the left/right padding
      to 0 and make the hero heading/intro run edge-to-edge on phones. */
@@ -1366,7 +1285,7 @@ h1, h2, h3, p { margin: 0; }
 
 .doc-meta {
   font-size: 0.84rem;
-  color: var(--ink-subtle);
+  color: var(--ink-muted);
   font-weight: 500;
 }
 
@@ -1444,7 +1363,7 @@ h1, h2, h3, p { margin: 0; }
   border-bottom-color: var(--p-bright);
 }
 
-/* Support page · contact block + FAQ list */
+/* Support page - contact block + FAQ list */
 
 .contact-band {
   margin-top: var(--s-4);
@@ -1539,7 +1458,7 @@ h1, h2, h3, p { margin: 0; }
   .doc-hero { padding-block: var(--s-5) var(--s-6); }
 }
 
-/* 8c · Dark mode ----------------------------------------------------- */
+/* 8c - Dark mode ----------------------------------------------------- */
 /* Opt-in via a `<html data-theme="dark">` attribute set by the header
    toggle. Site defaults to LIGHT; users pick their mode manually and
    the choice persists in localStorage. Tokens are re-mapped here only;
@@ -1558,8 +1477,8 @@ h1, h2, h3, p { margin: 0; }
   --hairline-strong: rgba(232, 244, 236, 0.16);
 
   /* Keep brand greens but nudge their opacity targets for dark bg */
-  --p-lime-soft: rgba(139, 191, 58, 0.22);
   --p-bright-soft: rgba(52, 199, 89, 0.22);
+  --p-strong: #4FD46F;
   --p-dark-subtle: rgba(232, 244, 236, 0.08);
 
   /* Shadows mostly vanish on dark backgrounds; swap to subtle lifts */
@@ -1569,7 +1488,7 @@ h1, h2, h3, p { margin: 0; }
   --sh-hero: 0 30px 70px -25px rgba(0, 0, 0, 0.7);
 }
 
-/* Component overrides · each prefixed with the `:root[data-theme="dark"]`
+/* Component overrides - each prefixed with the `:root[data-theme="dark"]`
    scope so they apply ONLY when dark mode is explicitly enabled. */
 :root[data-theme="dark"] .site-header {
   background: rgba(15, 21, 18, 0.82);
@@ -1627,10 +1546,10 @@ h1, h2, h3, p { margin: 0; }
   border-color: rgba(52, 199, 89, 0.22);
 }
 
-/* Phone mockup in dark mode · scene swaps to NIGHT (matching what the
+/* Phone mockup in dark mode - scene swaps to NIGHT (matching what the
    app actually shows at night via its time-of-day system), but the
    app UI itself (card, dock, stat text) stays LIGHT to honestly reflect
-   that Trot does not have a dark theme · it's the same light app, just
+   that Trot does not have a dark theme - it's the same light app, just
    set against the night scene. Re-scope the ink tokens inside the phone
    back to their light values so the inner text stays dark on white. */
 
@@ -1640,7 +1559,7 @@ h1, h2, h3, p { margin: 0; }
 :root[data-theme="dark"] .scene-foreground {
   content: url("assets/night-foreground.webp");
   /* Day and night foreground art are pixel-aligned at the source, so
-     both themes share the default translateY(120px) · no per-theme
+     both themes share the default translateY(120px) - no per-theme
      override needed. */
 }
 
@@ -1653,7 +1572,7 @@ h1, h2, h3, p { margin: 0; }
   --p-dark-subtle: rgba(20, 34, 28, 0.08);
 }
 
-/* Card + dock in dark mode · the app uses translucent chrome so these
+/* Card + dock in dark mode - the app uses translucent chrome so these
    pick up a hint of the night scene behind them. Drop solid white
    backgrounds and use semi-transparent light instead, matching app feel. */
 :root[data-theme="dark"] .device-panel {
@@ -1661,7 +1580,7 @@ h1, h2, h3, p { margin: 0; }
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
-:root[data-theme="dark"] .dock-icons {
+:root[data-theme="dark"] .dock-tabs {
   background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -1688,7 +1607,7 @@ html.theme-toggling *::after {
   backface-visibility: hidden;
 }
 
-/* Daily Insights feature mockup in dark mode · the mini-ring inner core
+/* Daily Insights feature mockup in dark mode - the mini-ring inner core
    and mini-stat chip used the default card color, which was nearly
    identical to the feature card's dark gradient and blended in. Lift
    them to a distinct green-tinted dark shade so they read clearly. */
@@ -1710,7 +1629,7 @@ html.theme-toggling *::after {
   color: #E8F4EC;
 }
 
-/* Pet card image · swap the dark drop-shadow for a lighter halo +
+/* Pet card image - swap the dark drop-shadow for a lighter halo +
    stronger depth shadow so the mascot silhouette reads against the
    dark card. */
 :root[data-theme="dark"] .feature-mockup-pet img {
@@ -1747,7 +1666,7 @@ html.theme-toggling *::after {
 :root[data-theme="dark"] .theme-toggle .toggle-icon-sun { display: inline-block; }
 :root[data-theme="dark"] .theme-toggle .toggle-icon-moon { display: none; }
 
-/* 9 · Reduce motion -------------------------------------------------- */
+/* 9 - Reduce motion -------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | Lambert Apps</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/png" sizes="192x192" href="/trot/favicon.png">
+    <meta name="theme-color" content="#F3F6F0" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0F1512" media="(prefers-color-scheme: dark)">
+    <style>
+        :root {
+            --surface: #F3F6F0;
+            --ink: #14221C;
+            --ink-muted: rgba(20, 34, 28, 0.65);
+            --green: #34C759;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --surface: #0F1512;
+                --ink: #E8F4EC;
+                --ink-muted: rgba(232, 244, 236, 0.68);
+            }
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface);
+            color: var(--ink);
+            font-family: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            text-align: center;
+            padding: 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+        main { max-width: 420px; }
+        img { width: 150px; height: auto; margin-bottom: 8px; }
+        h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin: 0 0 10px;
+        }
+        p {
+            color: var(--ink-muted);
+            line-height: 1.55;
+            margin: 0 0 28px;
+        }
+        a {
+            display: inline-block;
+            padding: 13px 30px;
+            background: var(--green);
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 999px;
+            box-shadow: 0 12px 24px -10px rgba(52, 199, 89, 0.55);
+            transition: transform 0.2s ease;
+        }
+        a:hover { transform: translateY(-2px); }
+        @media (prefers-reduced-motion: reduce) {
+            a, a:hover { transition: none; transform: none; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <img src="/trot/assets/mascot.webp" alt="">
+        <h1>This trail doesn't go anywhere.</h1>
+        <p>The page you're looking for moved or never existed. Your companion knows the way back.</p>
+        <a href="/trot/">Back to Trot</a>
+    </main>
+</body>
+</html>
