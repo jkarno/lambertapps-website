@@ -1108,6 +1108,16 @@ h1, h2, h3, p { margin: 0; }
   background: var(--p-bright);
 }
 
+/* Progress feature - on scroll-in the level card plays a one-shot "level up":
+   the JS drives --p so the bar fills to the top, then rolls over as the rank
+   title advances (see the level-up block in index.html). width reads --p so
+   those changes transition; the Steps widget card keeps its own static bar.
+   Reduced motion is neutralized by the global transition-duration override. */
+.feature-mockup-level .widget-bar > span {
+  width: var(--p);
+  transition: width 1000ms var(--ease-out);
+}
+
 
 @media (max-width: 960px) {
   .feature-grid { grid-template-columns: 1fr; gap: var(--s-6); }
@@ -1513,13 +1523,14 @@ h1, h2, h3, p { margin: 0; }
 :root[data-theme="dark"] .feature-mockup-widgets {
   background: linear-gradient(135deg, #1B2B1B 0%, #142418 100%);
 }
-/* The widget card is a real iOS widget, so it stays light (white) in both
-   themes - same approach as the phone's app UI. Re-scope the ink tokens to
-   their dark-on-light values so the text stays readable on the white card
-   instead of inheriting dark mode's light ink. */
+/* Home & Lock Screen widgets adopt the system appearance on iOS, so in dark
+   mode a real widget renders dark - not a white card stranded on the night
+   background. Give it a lifted dark surface (matching the other dark-mode
+   mockup chips) and let the text inherit dark mode's light ink. The green
+   eyebrow, track, and fill carry through unchanged. */
 :root[data-theme="dark"] .widget-card {
-  --ink: #14221C;
-  --ink-muted: rgba(20, 34, 28, 0.65);
+  background: #2A3832;
+  box-shadow: 0 14px 30px -16px rgba(0, 0, 0, 0.65);
 }
 
 :root[data-theme="dark"] .inline-link {

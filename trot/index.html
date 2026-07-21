@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trot | Walk More With a Step Counter Pet</title>
-    <meta name="description" content="Trot is a step counter pet for iPhone. Track steps in real time, hit daily goals, and watch your pet react as you walk.">
+    <!-- meta / OG / JSON-LD descriptions surface "earn achievements" (1.2)
+         so the leveling + achievements feature shows up in search + social. -->
+    <meta name="description" content="Trot is a step counter pet for iPhone. Track steps in real time, hit daily goals, earn achievements, and watch your pet react as you walk.">
     <link rel="canonical" href="https://lambertapps.com/trot/">
 
     <!-- Favicon + iOS add-to-home title -->
@@ -19,11 +21,11 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lambertapps.com/trot/">
     <meta property="og:title" content="Trot - Walk More With a Step Counter Pet">
-    <meta property="og:description" content="A step counter with a reactive pet. Track your daily walks, build streaks, and watch your trends grow.">
+    <meta property="og:description" content="A step counter with a reactive pet. Track your daily walks, build streaks, earn achievements, and watch your trends grow.">
     <meta property="og:image" content="https://lambertapps.com/trot/app-icon.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Trot - Walk More With a Step Counter Pet">
-    <meta name="twitter:description" content="A step counter with a reactive pet. Track your daily walks, build streaks, and watch your trends grow.">
+    <meta name="twitter:description" content="A step counter with a reactive pet. Track your daily walks, build streaks, earn achievements, and watch your trends grow.">
     <meta name="twitter:image" content="https://lambertapps.com/trot/app-icon.png">
 
     <!-- Fonts - Nunito as non-Apple fallback for SF Pro Rounded.
@@ -43,7 +45,7 @@
         "@context": "https://schema.org",
         "@type": "MobileApplication",
         "name": "Trot",
-        "description": "Trot is a step counter pet for iPhone. Track steps in real time, hit daily goals, and watch your pet react as you walk.",
+        "description": "Trot is a step counter pet for iPhone. Track steps in real time, hit daily goals, earn achievements, and watch your pet react as you walk.",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "iOS",
         "url": "https://lambertapps.com/trot/",
@@ -199,6 +201,10 @@
                                         <small>Trends</small>
                                     </span>
                                     <span class="dock-tab">
+                                        <i class="icon"><svg viewBox="0 0 256 256"><path d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-11.55,39.29c-4.79,5-9.75,10.17-12.38,16.52-2.52,6.1-2.63,13.07-2.73,19.82-.1,7-.21,14.33-3.32,17.43s-10.39,3.22-17.43,3.32c-6.75.1-13.72.21-19.82,2.73-6.35,2.63-11.52,7.59-16.52,12.38S132,224,128,224s-9.15-4.92-14.11-9.69-10.17-9.75-16.52-12.38c-6.1-2.52-13.07-2.63-19.82-2.73-7-.1-14.33-.21-17.43-3.32s-3.22-10.39-3.32-17.43c-.1-6.75-.21-13.72-2.73-19.82-2.63-6.35-7.59-11.52-12.38-16.52S32,132,32,128s4.92-9.15,9.69-14.11,9.75-10.17,12.38-16.52c2.52-6.1,2.63-13.07,2.73-19.82.1-7,.21-14.33,3.32-17.43S70.51,56.9,77.55,56.8c6.75-.1,13.72-.21,19.82-2.73,6.35-2.63,11.52-7.59,16.52-12.38S124,32,128,32s9.15,4.92,14.11,9.69,10.17,9.75,16.52,12.38c6.1,2.52,13.07,2.63,19.82,2.73,7,.1,14.33.21,17.43,3.32s3.22,10.39,3.32,17.43c.1,6.75.21,13.72,2.73,19.82,2.63,6.35,7.59,11.52,12.38,16.52S224,124,224,128,219.08,137.15,214.31,142.11ZM173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"/></svg></i>
+                                        <small>Progress</small>
+                                    </span>
+                                    <span class="dock-tab">
                                         <i class="icon"><svg viewBox="0 0 256 256"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm88-29.84q.06-2.16,0-4.32l14.92-18.64a8,8,0,0,0,1.48-7.06,107.21,107.21,0,0,0-10.88-26.25,8,8,0,0,0-6-3.93l-23.72-2.64q-1.48-1.56-3-3L186,40.54a8,8,0,0,0-3.94-6,107.71,107.71,0,0,0-26.25-10.87,8,8,0,0,0-7.06,1.49L130.16,40Q128,40,125.84,40L107.2,25.11a8,8,0,0,0-7.06-1.48A107.6,107.6,0,0,0,73.89,34.51a8,8,0,0,0-3.93,6L67.32,64.27q-1.56,1.49-3,3L40.54,70a8,8,0,0,0-6,3.94,107.71,107.71,0,0,0-10.87,26.25,8,8,0,0,0,1.49,7.06L40,125.84Q40,128,40,130.16L25.11,148.8a8,8,0,0,0-1.48,7.06,107.21,107.21,0,0,0,10.88,26.25,8,8,0,0,0,6,3.93l23.72,2.64q1.49,1.56,3,3L70,215.46a8,8,0,0,0,3.94,6,107.71,107.71,0,0,0,26.25,10.87,8,8,0,0,0,7.06-1.49L125.84,216q2.16.06,4.32,0l18.64,14.92a8,8,0,0,0,7.06,1.48,107.21,107.21,0,0,0,26.25-10.88,8,8,0,0,0,3.93-6l2.64-23.72q1.56-1.48,3-3L215.46,186a8,8,0,0,0,6-3.94,107.71,107.71,0,0,0,10.87-26.25,8,8,0,0,0-1.49-7.06Zm-16.1-6.5a73.93,73.93,0,0,1,0,8.68,8,8,0,0,0,1.74,5.48l14.19,17.73a91.57,91.57,0,0,1-6.23,15L187,173.11a8,8,0,0,0-5.1,2.64,74.11,74.11,0,0,1-6.14,6.14,8,8,0,0,0-2.64,5.1l-2.51,22.58a91.32,91.32,0,0,1-15,6.23l-17.74-14.19a8,8,0,0,0-5-1.75h-.48a73.93,73.93,0,0,1-8.68,0,8,8,0,0,0-5.48,1.74L100.45,215.8a91.57,91.57,0,0,1-15-6.23L82.89,187a8,8,0,0,0-2.64-5.1,74.11,74.11,0,0,1-6.14-6.14,8,8,0,0,0-5.1-2.64L46.43,170.6a91.32,91.32,0,0,1-6.23-15l14.19-17.74a8,8,0,0,0,1.74-5.48,73.93,73.93,0,0,1,0-8.68,8,8,0,0,0-1.74-5.48L40.2,100.45a91.57,91.57,0,0,1,6.23-15L69,82.89a8,8,0,0,0,5.1-2.64,74.11,74.11,0,0,1,6.14-6.14A8,8,0,0,0,82.89,69L85.4,46.43a91.32,91.32,0,0,1,15-6.23l17.74,14.19a8,8,0,0,0,5.48,1.74,73.93,73.93,0,0,1,8.68,0,8,8,0,0,0,5.48-1.74L155.55,40.2a91.57,91.57,0,0,1,15,6.23L173.11,69a8,8,0,0,0,2.64,5.1,74.11,74.11,0,0,1,6.14,6.14,8,8,0,0,0,5.1,2.64l22.58,2.51a91.32,91.32,0,0,1,6.23,15l-14.19,17.74A8,8,0,0,0,199.87,123.66Z"/></svg></i>
                                         <small>Settings</small>
                                     </span>
@@ -215,7 +221,7 @@
                 <div class="feature-intro">
                     <div class="section-label">Why Trot works</div>
                     <h2>A step counter that makes you want to keep walking.</h2>
-                    <p>A reactive pet, daily stats, history, and trends. Clear enough that your daily goal actually feels worth chasing.</p>
+                    <p>A reactive pet, levels to earn, daily stats, history, and trends. Clear enough that your daily goal actually feels worth chasing.</p>
                 </div>
 
                 <div class="feature-list">
@@ -226,6 +232,37 @@
                         <div class="feature-content">
                             <h3>A motivational pet</h3>
                             <p>Your pet's mood reflects how you're walking. Hit your goal and they perk up. Slow days show too, so progress is easy to feel.</p>
+                        </div>
+                    </article>
+
+                    <!-- Progress / achievements feature card (1.2). Placed second,
+                         right after the mascot, so the leveling hook lands early.
+                         The mockup reuses the widget-card / widget-bar primitives as
+                         a level card. On scroll-in it plays a one-shot "level up":
+                         the bar fills to the top, then the pet crosses a threshold -
+                         Level 9 "Explorer" becomes Level 10 "Pathfinder" and the bar
+                         rolls over (driven by the JS block below, keyed off the
+                         `data-level-*` hooks). No raw XP number - the app shows the
+                         bar fraction only. No pro-chip on the headline by design:
+                         leveling and the Everyday Habits pack are free, so a binary
+                         Pro chip would misread. The free vs. Pro / one-time pack
+                         split lives in the Support FAQ and Terms, not on this card.
+                         Explorer -> Pathfinder is a real adjacent step on the app's
+                         title ladder. -->
+                    <article class="feature-item">
+                        <div class="feature-mockup feature-mockup-widgets feature-mockup-level" aria-hidden="true">
+                            <div class="widget-card">
+                                <div class="widget-card-top">
+                                    <span>Level <span data-level-num>9</span></span>
+                                </div>
+                                <strong data-level-title>Explorer</strong>
+                                <small data-level-next>Next up: Pathfinder</small>
+                                <div class="widget-bar" aria-hidden="true"><span data-level-bar style="--p: 70%;"></span></div>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Level up</h3>
+                            <p>Take on streak and walking challenges to earn achievements and level up your pet.</p>
                         </div>
                     </article>
 
@@ -563,6 +600,57 @@
                         el.textContent = Math.round(target).toLocaleString();
                     }
                 });
+            }
+
+            // --- 6. Progress feature - one-shot level-up demo ---
+            // On scroll-in the level bar fills to the top, then the pet levels
+            // up: the rank title advances (Explorer -> Pathfinder), the number
+            // ticks, and the bar rolls over into the new rank's early progress.
+            // Fires once then unobserves, matching the reveal beat on the other
+            // tiles. Skipped under reduced motion, where the card rests on its
+            // authored Explorer state.
+            const levelMockup = document.querySelector('.feature-mockup-level');
+            if (!reduceMotion && levelMockup && 'IntersectionObserver' in window) {
+                const numEl   = levelMockup.querySelector('[data-level-num]');
+                const titleEl = levelMockup.querySelector('[data-level-title]');
+                const nextEl  = levelMockup.querySelector('[data-level-next]');
+                const barEl   = levelMockup.querySelector('[data-level-bar]');
+
+                // Set --p, optionally snapping without a transition (the roll-over).
+                const setBar = (value, animate) => {
+                    if (animate) {
+                        barEl.style.setProperty('--p', value);
+                    } else {
+                        barEl.style.transition = 'none';
+                        barEl.style.setProperty('--p', value);
+                        void barEl.offsetWidth;   // flush before restoring transition
+                        barEl.style.transition = '';
+                    }
+                };
+
+                // Prime a low start so the fill reads clearly on reveal.
+                setBar('16%', false);
+
+                const runLevelUp = () => {
+                    setBar('100%', true);                     // finish this level
+                    setTimeout(() => {
+                        setBar('0%', false);                  // roll over to the next
+                        numEl.textContent = '10';
+                        titleEl.textContent = 'Pathfinder';
+                        nextEl.textContent = 'Next up: Adventurer';
+                        requestAnimationFrame(() => setBar('38%', true));
+                    }, 1150);
+                };
+
+                const levelObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            runLevelUp();
+                            levelObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.4 });
+                levelObserver.observe(levelMockup);
             }
         })();
     </script>
